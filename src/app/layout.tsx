@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import { MoodProvider } from "@/contexts/mood-context";
+import { AssessmentProvider } from "@/contexts/assessment-context";
 import "./globals.css";
 
 const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
@@ -24,7 +25,11 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl">
       <body className={`${ibmPlexSansArabic.variable} antialiased`}>
-        <MoodProvider>{children}</MoodProvider>
+        <MoodProvider>
+          <AssessmentProvider>
+            {children}
+          </AssessmentProvider>
+        </MoodProvider>
       </body>
     </html>
   );
