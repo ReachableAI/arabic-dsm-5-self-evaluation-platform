@@ -17,7 +17,7 @@ import {
 } from "@/components/results";
 import { generateSummary } from "@/lib/pattern-calculator";
 import { getResourcesForDisorder, CRISIS_RESOURCES } from "@/lib/resources";
-import app_copy from "@/content/ui/app_copy.json";
+import app_copy from "@/../content/ui/app_copy.json";
 
 interface ResultsPageProps {
   params: Promise<{

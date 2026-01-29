@@ -11,6 +11,13 @@ import * as React from 'react';
 import { useRouter } from 'next/navigation';
 import { QuestionFlow } from '@/components/assessment';
 import type { AssessmentModule } from '@/types/assessment';
+import anxietyModule from '@/../content/anxiety/anxiety_module.json';
+import depressionModule from '@/../content/depression/depression_module.json';
+
+const moduleMap: Record<string, AssessmentModule> = {
+  anxiety: anxietyModule as AssessmentModule,
+  depression: depressionModule as AssessmentModule,
+};
 
 interface AssessmentPageProps {
   params: Promise<{
@@ -21,9 +28,6 @@ interface AssessmentPageProps {
 
 export default function AssessmentPage({ params }: AssessmentPageProps) {
   const router = useRouter();
-  const [moduleData, setModuleData] = React.useState<AssessmentModule | null>(null);
-  const [loading, setLoading] = React.useState(true);
-  const [error, setError] = React.useState<string | null>(null);
   const [resolvedParams, setResolvedParams] = React.useState<{
     moduleId: string;
     disorderId: string;
@@ -34,36 +38,24 @@ export default function AssessmentPage({ params }: AssessmentPageProps) {
     params.then(setResolvedParams);
   }, [params]);
 
-  // Load module data
-  React.useEffect(() => {
-    if (!resolvedParams) return;
-
-    async function loadModule() {
-      try {
-        const response = await fetch(`/content/${resolvedParams!.moduleId}/${resolvedParams!.moduleId}_module.json`);
-        
-        if (!response.ok) {
-          throw new Error('فشل تحميل بيانات التقييم');
-        }
-
-        const data = await response.json();
-        setModuleData(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'حدث خطأ غير متوقع');
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadModule();
+  const moduleData = React.useMemo(() => {
+    if (!resolvedParams) return null;
+    return moduleMap[resolvedParams.moduleId] ?? null;
   }, [resolvedParams]);
+
+  const disorderExists = React.useMemo(() => {
+    if (!moduleData || !resolvedParams) return false;
+    return moduleData.disorders.some((disorder) => disorder.id === resolvedParams.disorderId);
+  }, [moduleData, resolvedParams]);
 
   const handleComplete = () => {
     // Navigate to results page
-    router.push(`/results/${resolvedParams!.moduleId}`);
+    if (resolvedParams) {
+      router.push(`/results/${resolvedParams.moduleId}`);
+    }
   };
 
-  if (loading) {
+  if (!resolvedParams) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-text-secondary">جارٍ تحميل التقييم...</div>
@@ -71,11 +63,11 @@ export default function AssessmentPage({ params }: AssessmentPageProps) {
     );
   }
 
-  if (error || !moduleData || !resolvedParams) {
+  if (!moduleData || !disorderExists) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen gap-4 px-4">
         <div className="text-text-primary text-xl">
-          {error || 'لم يتم العثور على التقييم'}
+          لم يتم العثور على التقييم
         </div>
         <button
           onClick={() => router.push('/home')}
