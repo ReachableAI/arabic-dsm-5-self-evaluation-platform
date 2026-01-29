@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+/* Theme A: Serenity (سكينة) - Nature-inspired calm */
+@theme {
+  /* Colors - Theme A Palette */
+  --color-primary: oklch(57% 0.08 195);         /* #4A7C7E - Primary actions, headings */
+  --color-primary-light: oklch(68% 0.08 195);   /* #7BA8AA - Hover states, highlights */
+  --color-secondary: oklch(78% 0.12 75);        /* #E8B86D - Accents, progress indicators */
+  --color-background: oklch(97% 0.01 60);       /* #F9F7F4 - Page background */
+  --color-surface: oklch(100% 0 0);             /* #FFFFFF - Cards, modals */
+  --color-text-primary: oklch(26% 0.01 240);    /* #2D3436 - Body text */
+  --color-text-secondary: oklch(48% 0.01 240);  /* #636E72 - Secondary text */
+  --color-success: oklch(65% 0.15 135);         /* #6AB04C - Positive feedback */
+  --color-warning: oklch(81% 0.14 90);          /* #F9CA24 - Caution states */
+  --color-danger: oklch(58% 0.19 25);           /* #EB4D4B - Crisis/urgent */
+
+  /* Typography - IBM Plex Sans Arabic with fallbacks */
+  --font-sans: var(--font-ibm-plex-sans-arabic), "Cairo", "Noto Sans Arabic", "Tahoma", sans-serif;
+
+  /* Font Sizing Scale (Mobile-First) - Arabic text needs 10-15% more line-height */
+  --font-size-xs: 0.75rem;      /* 12px */
+  --font-size-sm: 0.875rem;     /* 14px */
+  --font-size-base: 1rem;       /* 16px */
+  --font-size-lg: 1.125rem;     /* 18px */
+  --font-size-xl: 1.25rem;      /* 20px */
+  --font-size-2xl: 1.5rem;      /* 24px */
+  --font-size-3xl: 1.875rem;    /* 30px */
+  --font-size-4xl: 2.25rem;     /* 36px */
+
+  /* Line Heights - Increased for Arabic text */
+  --line-height-xs: 1.5;
+  --line-height-sm: 1.5;
+  --line-height-base: 1.6;
+  --line-height-lg: 1.5;
+  --line-height-xl: 1.4;
+  --line-height-2xl: 1.3;
+  --line-height-3xl: 1.2;
+  --line-height-4xl: 1.1;
+
+  /* Spacing - Using CSS Logical Properties */
+  --spacing-xs: 0.25rem;   /* 4px */
+  --spacing-sm: 0.5rem;    /* 8px */
+  --spacing-md: 1rem;      /* 16px */
+  --spacing-lg: 1.5rem;    /* 24px */
+  --spacing-xl: 2rem;      /* 32px */
+  --spacing-2xl: 3rem;     /* 48px */
+  --spacing-3xl: 4rem;     /* 64px */
+
+  /* Radii */
+  --radius-sm: 0.25rem;    /* 4px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 0.75rem;    /* 12px */
+  --radius-xl: 1rem;       /* 16px */
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base Styles with RTL Support */
+html {
+  direction: rtl;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+}
+
+/* RTL Text Alignment - Use logical properties */
+.text-start {
+  text-align: start; /* Right in RTL */
+}
+
+.text-end {
+  text-align: end; /* Left in RTL */
+}
+
+/* Focus Visible - WCAG 2.4.7 Compliance */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Skip to Content Link - Accessibility */
+.skip-to-content {
+  position: absolute;
+  inset-block-start: -100%;
+  inset-inline-start: 0;
+  padding: var(--spacing-md);
+  background: var(--color-primary);
+  color: white;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skip-to-content:focus {
+  inset-block-start: 0;
+}
+
+/* Smooth Scrolling */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Respect Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
