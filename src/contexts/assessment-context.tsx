@@ -26,7 +26,7 @@ interface AssessmentContextValue {
   session: AssessmentSession | null;
   
   // Actions
-  startAssessment: (moduleId: string, disorderId: string) => void;
+  startAssessment: (module: AssessmentModule, disorderId: string) => void;
   recordResponse: (questionId: string, value: ResponseValue) => void;
   goToNextQuestion: () => void;
   goToPreviousQuestion: () => void;
@@ -57,9 +57,10 @@ export function AssessmentProvider({ children }: { children: React.ReactNode }) 
   /**
    * Start a new assessment session
    */
-  const startAssessment = React.useCallback((moduleId: string, disorderId: string) => {
+  const startAssessment = React.useCallback((module: AssessmentModule, disorderId: string) => {
+    setModuleData(module);
     setSession({
-      module_id: moduleId,
+      module_id: module.module.id,
       disorder_id: disorderId,
       started_at: Date.now(),
       responses: [],

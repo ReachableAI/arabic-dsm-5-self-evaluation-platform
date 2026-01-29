@@ -20,7 +20,7 @@ import * as React from 'react';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useAssessment } from '@/contexts/assessment-context';
-import type { AssessmentModule, ResponseValue } from '@/types/assessment';
+import type { AssessmentModule, CompositeResponseValue, ResponseValue } from '@/types/assessment';
 import { getVisibleQuestions } from '@/lib/pattern-calculator';
 import { QuestionRenderer } from './question-renderer';
 import { Button } from '@/components/ui/button';
@@ -66,9 +66,9 @@ export function QuestionFlow({ module, disorderId, onComplete }: QuestionFlowPro
   // Start assessment on mount
   React.useEffect(() => {
     if (!session || session.disorder_id !== disorderId) {
-      startAssessment(module.module.id, disorderId);
+      startAssessment(module, disorderId);
     }
-  }, [module.module.id, disorderId, session, startAssessment]);
+  }, [module, disorderId, session, startAssessment]);
 
   // Get current disorder and questions
   const disorder = React.useMemo(
@@ -126,28 +126,80 @@ export function QuestionFlow({ module, disorderId, onComplete }: QuestionFlowPro
     trigger: { show_modal_if: string; modal_type: string },
     value: ResponseValue
   ): boolean => {
-    if (typeof value !== 'number') return false;
+    let numericValue: number | null = null;
+    if (typeof value === 'number') {
+      numericValue = value;
+    } else if (typeof value === 'string') {
+      const scores: Record<string, number> = {
+        never: 0,
+        rarely: 1,
+        sometimes: 2,
+        often: 3,
+        always: 4,
+      };
+      numericValue = scores[value] ?? null;
+    }
+
+    if (numericValue === null) return false;
 
     // Parse condition (e.g., ">=1")
     const condition = trigger.show_modal_if;
     if (condition.startsWith('>=')) {
       const threshold = parseInt(condition.slice(2));
-      return value >= threshold;
+      return numericValue >= threshold;
     }
     if (condition.startsWith('>')) {
       const threshold = parseInt(condition.slice(1));
-      return value > threshold;
+      return numericValue > threshold;
     }
     if (condition.startsWith('==')) {
       const threshold = parseInt(condition.slice(2));
-      return value === threshold;
+      return numericValue === threshold;
     }
 
     return false;
   };
 
+  const isResponseComplete = React.useMemo(() => {
+    if (!currentQuestion?.required) return true;
+    if (currentResponse === undefined || currentResponse === null) return false;
+
+    if (Array.isArray(currentResponse)) {
+      return currentResponse.length > 0;
+    }
+
+    if (typeof currentResponse === 'object') {
+      const composite = currentResponse as CompositeResponseValue;
+
+      if ('occurrence' in composite) {
+        if (!composite.occurrence) return false;
+        if (composite.occurrence === 'yes') {
+          if (currentQuestion.response_type === 'yes_no_duration') {
+            return typeof composite.duration === 'number';
+          }
+          if (currentQuestion.response_type === 'yes_no_frequency') {
+            return typeof composite.frequency === 'number';
+          }
+        }
+        return true;
+      }
+
+      if ('changed' in composite) {
+        if (!composite.changed) return false;
+        if (composite.changed === 'changed') {
+          return Boolean(composite.direction);
+        }
+        return true;
+      }
+
+      return false;
+    }
+
+    return true;
+  }, [currentQuestion, currentResponse]);
+
   const handleNext = () => {
-    if (!currentResponse && currentQuestion?.required) {
+    if (currentQuestion?.required && !isResponseComplete) {
       // Could show validation error here
       return;
     }
@@ -243,6 +295,7 @@ export function QuestionFlow({ module, disorderId, onComplete }: QuestionFlowPro
         question={currentQuestion}
         value={currentResponse}
         onChange={handleResponseChange}
+        responseScales={module.response_scales}
       />
 
       {/* Navigation */}
@@ -260,7 +313,7 @@ export function QuestionFlow({ module, disorderId, onComplete }: QuestionFlowPro
         <Button
           size="large"
           onClick={handleNext}
-          disabled={!currentResponse && currentQuestion.required}
+          disabled={currentQuestion.required && !isResponseComplete}
           className={cn(
             'min-w-[120px]',
             isLastQuestion && 'bg-green-600 hover:bg-green-700'

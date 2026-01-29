@@ -11,6 +11,7 @@
 export type ResponseType = 
   | 'frequency_5point'
   | 'yes_no'
+  | 'yes_no_frequency'
   | 'yes_no_duration'
   | 'multi_select'
   | 'duration'
@@ -22,7 +23,46 @@ export type FrequencyValue = 'never' | 'rarely' | 'sometimes' | 'often' | 'alway
 export type YesNoValue = 'yes' | 'no';
 export type DurationValue = 'less_2_weeks' | '2_4_weeks' | '1_3_months' | '3_6_months' | '6_months_plus';
 
-export type ResponseValue = FrequencyValue | YesNoValue | string | string[];
+export interface CompositeResponseValue {
+  occurrence?: YesNoValue;
+  duration?: number;
+  frequency?: number;
+  changed?: 'no_change' | 'changed';
+  direction?: 'decreased' | 'increased';
+}
+
+export type ResponseValue =
+  | FrequencyValue
+  | YesNoValue
+  | DurationValue
+  | number
+  | string
+  | string[]
+  | CompositeResponseValue;
+
+export interface ResponseScaleOption {
+  value: string | number;
+  label: string;
+  label_en?: string;
+  description?: string;
+}
+
+export interface ResponseScalePart {
+  id: string;
+  type: 'radio';
+  conditional?: {
+    show_if: string;
+  };
+  options: ResponseScaleOption[];
+}
+
+export interface ResponseScale {
+  type: 'radio' | 'checkbox' | 'composite';
+  options?: ResponseScaleOption[];
+  parts?: ResponseScalePart[];
+  min_selections?: number;
+  max_selections?: number | null;
+}
 
 /**
  * Conditional display logic for questions
@@ -44,8 +84,11 @@ export interface Question {
   required: boolean;
   conditional?: QuestionConditional;
   options?: Array<{
-    value: string;
-    label: string;
+    id?: string;
+    value?: string;
+    label?: string;
+    text?: string;
+    criterion?: string;
   }>;
   risk_flag?: 'CRITICAL' | 'HIGH' | 'MODERATE'; // Risk level for crisis detection
   crisis_trigger?: {
@@ -88,6 +131,7 @@ export interface AssessmentModule {
     color: string;
   };
   disorders: Disorder[];
+  response_scales?: Record<string, ResponseScale>;
 }
 
 /**

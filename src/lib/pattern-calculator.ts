@@ -7,17 +7,20 @@
 
 import type {
   AssessmentModule,
+  CompositeResponseValue,
   Disorder,
   Question,
   QuestionResponse,
   PatternScore,
   FrequencyValue,
+  ResponseValue,
 } from '@/types/assessment';
 
 /**
  * Convert frequency value to numeric score (0-4)
  */
-export function frequencyToScore(value: FrequencyValue | string): number {
+export function frequencyToScore(value: FrequencyValue | string | number): number {
+  if (typeof value === 'number') return value;
   const scores: Record<string, number> = {
     never: 0,
     rarely: 1,
@@ -26,6 +29,36 @@ export function frequencyToScore(value: FrequencyValue | string): number {
     always: 4,
   };
   return scores[value] ?? 0;
+}
+
+function responseToScore(question: Question, value: ResponseValue): number {
+  if (value === null || value === undefined) return 0;
+
+  if (typeof value === 'number') {
+    return value;
+  }
+
+  if (typeof value === 'string') {
+    if (value === 'yes') return 4;
+    if (value === 'no') return 0;
+    if (value === 'no_change' || value === 'normal') return 0;
+    if (value === 'changed') return 4;
+    return frequencyToScore(value);
+  }
+
+  if (Array.isArray(value)) {
+    return value.length > 0 ? 4 : 0;
+  }
+
+  const composite = value as CompositeResponseValue;
+  if (composite.occurrence) {
+    return composite.occurrence === 'yes' ? 4 : 0;
+  }
+  if (composite.changed) {
+    return composite.changed === 'changed' ? 4 : 0;
+  }
+
+  return 0;
 }
 
 /**
@@ -67,7 +100,21 @@ export function shouldShowQuestion(
   }
 
   // Handle exact matches (e.g., "yes")
-  return value === condition;
+  if (typeof value === 'string' || typeof value === 'number') {
+    return value === condition;
+  }
+
+  if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+    const composite = value as CompositeResponseValue;
+    if (composite.occurrence) {
+      return composite.occurrence === condition;
+    }
+    if (composite.changed) {
+      return composite.changed === condition;
+    }
+  }
+
+  return false;
 }
 
 /**
@@ -103,12 +150,9 @@ function calculateCriterionScore(
   }
 
   const totalScore = criterionResponses.reduce((sum, response) => {
-    if (response.value === 'yes') return sum + 4;
-    if (response.value === 'no') return sum + 0;
-    if (typeof response.value === 'string') {
-      return sum + frequencyToScore(response.value);
-    }
-    return sum;
+    const question = criterionQuestions.find(q => q.id === response.question_id);
+    if (!question) return sum;
+    return sum + responseToScore(question, response.value);
   }, 0);
 
   return totalScore / criterionResponses.length;
@@ -127,13 +171,9 @@ function countSymptoms(
     const response = responses.find(r => r.question_id === question.id);
     if (!response) continue;
 
-    if (response.value === 'yes') {
+    const score = responseToScore(question, response.value);
+    if (score >= 2) { // "sometimes" or higher
       count++;
-    } else if (typeof response.value === 'string') {
-      const score = frequencyToScore(response.value);
-      if (score >= 2) { // "sometimes" or higher
-        count++;
-      }
     }
   }
 

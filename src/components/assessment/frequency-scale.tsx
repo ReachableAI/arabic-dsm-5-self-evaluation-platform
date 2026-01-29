@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 export interface FrequencyOption {
-  value: string;
+  value: string | number;
   label: string;
   shortLabel?: string;
 }
@@ -15,11 +15,11 @@ export interface FrequencyScaleProps {
   /**
    * Currently selected value
    */
-  value?: string;
+  value?: string | number;
   /**
    * Callback when option is selected
    */
-  onChange?: (value: string) => void;
+  onChange?: (value: string | number) => void;
   /**
    * Accessible label
    */
@@ -127,8 +127,8 @@ export const FrequencyScale = React.forwardRef<
                 tabIndex={
                   isFocused || (focusedIndex === -1 && index === 0) ? 0 : -1
                 }
-                onClick={() => onChange?.(option.value)}
-                onFocus={() => setFocusedIndex(index)}
+            onClick={() => onChange?.(option.value)}
+            onFocus={() => setFocusedIndex(index)}
                 className={cn(
                   "flex flex-col items-center justify-center gap-1 p-3 rounded-lg transition-all",
                   "min-h-[48px]", // WCAG touch target

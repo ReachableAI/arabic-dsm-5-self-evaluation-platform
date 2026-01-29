@@ -15,14 +15,15 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 
 export interface DurationOption {
-  value: string;
+  value: string | number;
   label: string;
-  labelEn: string;
+  labelEn?: string;
 }
 
 export interface DurationScaleProps {
-  value?: string;
-  onChange?: (value: string) => void;
+  options?: DurationOption[];
+  value?: string | number;
+  onChange?: (value: string | number) => void;
   'aria-label'?: string;
   className?: string;
 }
@@ -36,11 +37,21 @@ const defaultOptions: DurationOption[] = [
 ];
 
 export const DurationScale = React.forwardRef<HTMLDivElement, DurationScaleProps>(
-  ({ value, onChange, 'aria-label': ariaLabel, className, ...props }, ref) => {
+  (
+    {
+      options = defaultOptions,
+      value,
+      onChange,
+      'aria-label': ariaLabel,
+      className,
+      ...props
+    },
+    ref
+  ) => {
     const [focusedIndex, setFocusedIndex] = React.useState<number>(-1);
 
     const handleKeyDown = (event: React.KeyboardEvent) => {
-      const maxIndex = defaultOptions.length - 1;
+      const maxIndex = options.length - 1;
 
       switch (event.key) {
         case 'ArrowDown':
@@ -57,7 +68,7 @@ export const DurationScale = React.forwardRef<HTMLDivElement, DurationScaleProps
         case ' ':
           event.preventDefault();
           if (focusedIndex >= 0 && focusedIndex <= maxIndex) {
-            onChange?.(defaultOptions[focusedIndex].value);
+            onChange?.(options[focusedIndex].value);
           }
           break;
       }
@@ -72,7 +83,7 @@ export const DurationScale = React.forwardRef<HTMLDivElement, DurationScaleProps
         onKeyDown={handleKeyDown}
         {...props}
       >
-        {defaultOptions.map((option, index) => {
+        {options.map((option, index) => {
           const isSelected = value === option.value;
           const isFocused = focusedIndex === index;
 

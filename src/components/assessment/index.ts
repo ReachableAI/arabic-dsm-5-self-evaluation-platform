@@ -22,6 +22,9 @@ export type { DurationScaleProps, DurationOption } from "./duration-scale";
 export { MultiSelectResponse } from "./multi-select-response";
 export type { MultiSelectProps, MultiSelectOption } from "./multi-select-response";
 
+export { OptionListResponse } from "./option-list-response";
+export type { OptionListResponseProps, OptionListItem } from "./option-list-response";
+
 export { QuestionRenderer } from "./question-renderer";
 export type { QuestionRendererProps } from "./question-renderer";
 
