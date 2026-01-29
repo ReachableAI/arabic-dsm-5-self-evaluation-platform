@@ -1,18 +1,23 @@
-/**
- * Assessment Results Page (Placeholder)
- * 
- * Displays pattern scores and summary after assessment completion.
- * Full implementation will be in separate Results Display task.
- */
+"use client";
 
-'use client';
-
-import * as React from 'react';
-import { useRouter } from 'next/navigation';
-import { useAssessment } from '@/contexts/assessment-context';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { generateSummary } from '@/lib/pattern-calculator';
+import React from "react";
+import { useRouter } from "next/navigation";
+import { useAssessment } from "@/contexts/assessment-context";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import {
+  PatternCard,
+  PatternCardSkeleton,
+  calculatePatternLevel,
+  ResourceLinks,
+  ResourceLinksSkeleton,
+  ResultsNavigation,
+  ResultsNavigationSkeleton,
+} from "@/components/results";
+import { generateSummary } from "@/lib/pattern-calculator";
+import { getResourcesForDisorder, CRISIS_RESOURCES } from "@/lib/resources";
+import app_copy from "@/content/ui/app_copy.json";
 
 interface ResultsPageProps {
   params: Promise<{
@@ -23,47 +28,87 @@ interface ResultsPageProps {
 export default function ResultsPage({ params }: ResultsPageProps) {
   const router = useRouter();
   const { results } = useAssessment();
-  const [resolvedParams, setResolvedParams] = React.useState<{
-    moduleId: string;
-  } | null>(null);
+  const [resolvedParams, setResolvedParams] = React.useState<{ moduleId: string } | null>(null);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
-    params.then(setResolvedParams);
+    params.then((p) => {
+      setResolvedParams(p);
+      setIsLoading(false);
+    });
   }, [params]);
 
-  if (!results || !resolvedParams) {
+  if (!isLoading && (!results || !resolvedParams)) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen gap-4 px-4">
-        <div className="text-text-primary text-xl">
-          لا توجد نتائج متاحة
+      <main className="min-h-screen bg-background py-8 px-4">
+        <div className="max-w-3xl mx-auto flex flex-col items-center justify-center gap-6 py-16">
+          <div className="text-6xl">📋</div>
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-text-primary mb-2">
+              لا توجد نتائج متاحة
+            </h1>
+            <p className="text-text-secondary mb-6 leading-relaxed">
+              يبدو أنك لم تكمل تقييماً بعد. ابدأ تقييماً جديداً من الصفحة الرئيسية.
+            </p>
+          </div>
+          <Button onClick={() => router.push("/home")} size="lg">
+            العودة إلى الصفحة الرئيسية
+          </Button>
         </div>
-        <Button onClick={() => router.push('/home')}>
-          العودة إلى الصفحة الرئيسية
-        </Button>
-      </div>
+      </main>
+    );
+  }
+
+  if (isLoading || !results || !resolvedParams) {
+    return (
+      <main className="min-h-screen bg-background py-8 px-4">
+        <div className="max-w-3xl mx-auto flex flex-col gap-8">
+          <div className="h-10 bg-neutral-200 rounded w-1/3 animate-pulse" />
+          <div className="space-y-4">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <PatternCardSkeleton key={i} />
+            ))}
+          </div>
+          <ResourceLinksSkeleton />
+          <ResultsNavigationSkeleton />
+        </div>
+      </main>
     );
   }
 
   const summary = generateSummary(results.pattern_scores);
+  const copy = app_copy.results_templates;
+  const patternCopy = copy.pattern_based_language;
+  const specificFeedback = copy.specific_feedback as Record<string, string>;
 
   return (
     <main className="min-h-screen bg-background py-8 px-4">
-      <div className="max-w-3xl mx-auto flex flex-col gap-8">
+      <div className="max-w-4xl mx-auto flex flex-col gap-8">
         {/* Header */}
-        <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold text-text-primary">
-            نتائج التقييم
+        <header className="flex flex-col gap-2">
+          <h1 className="text-4xl font-bold text-text-primary">
+            📊 نتائج التقييم
           </h1>
-          <p className="text-text-secondary">
+          <p className="text-lg text-text-secondary">
             {results.module_title}
           </p>
-        </div>
+        </header>
+
+        {/* CRITICAL: Prominent Disclaimer Banner */}
+        <Alert className="border-2 border-red-300 bg-red-50">
+          <AlertDescription className="text-sm text-text-primary leading-relaxed">
+            <p className="font-bold mb-2">⚠️ هذه النتائج ليست تشخيصاً طبياً</p>
+            <p>
+              ما تراه أدناه هو ملخص لإجاباتك وأنماط محتملة. <span className="font-semibold">فقط متخصص مؤهل في الصحة النفسية</span> يمكنه تشخيص اضطراب نفسي.
+            </p>
+          </AlertDescription>
+        </Alert>
 
         {/* Summary */}
-        <Card className="p-6">
+        <Card className="p-6 bg-primary/5 border-primary/20">
           <div className="flex flex-col gap-4">
-            <h2 className="text-xl font-semibold text-text-primary">
-              ملخص الأنماط
+            <h2 className="text-2xl font-semibold text-text-primary">
+              {copy.summary_heading}
             </h2>
             <p className="text-base text-text-primary leading-relaxed">
               {summary}
@@ -71,69 +116,62 @@ export default function ResultsPage({ params }: ResultsPageProps) {
           </div>
         </Card>
 
-        {/* Pattern Scores */}
-        <div className="flex flex-col gap-4">
-          <h2 className="text-xl font-semibold text-text-primary">
-            الأنماط المُلاحظة
+        {/* Pattern Cards */}
+        <section className="flex flex-col gap-4">
+          <h2 className="text-2xl font-bold text-text-primary mb-2">
+            🔍 الأنماط المُلاحظة
           </h2>
-          
-          {results.pattern_scores.map((score) => (
-            <Card key={score.disorder_id} className="p-6">
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold text-text-primary">
-                    {score.disorder_name}
-                  </h3>
-                  <div className="text-2xl font-bold text-primary">
-                    {score.percentage}%
-                  </div>
-                </div>
-                
-                <div className="text-sm text-text-secondary">
-                  {score.total_symptoms} من {score.max_symptoms} أعراض مُلاحظة
-                </div>
+          <div className="flex flex-col gap-4">
+            {results.pattern_scores.map((score) => {
+              const level = calculatePatternLevel(score.percentage);
+              const levelData = patternCopy[level as keyof typeof patternCopy];
+              const feedbackKey = score.disorder_id.toLowerCase().replace(/[^a-z_]/g, "_") as keyof typeof specificFeedback;
+              const feedback = specificFeedback[feedbackKey];
 
-                {/* Progress bar */}
-                <div className="w-full h-2 bg-neutral-200 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-primary transition-all"
-                    style={{ width: `${score.percentage}%` }}
-                  />
-                </div>
-              </div>
-            </Card>
-          ))}
-        </div>
-
-        {/* Disclaimer */}
-        <Card className="p-6 bg-amber-50 border-amber-200">
-          <div className="flex flex-col gap-2">
-            <h3 className="text-base font-semibold text-text-primary">
-              تنويه مهم
-            </h3>
-            <p className="text-sm text-text-secondary leading-relaxed">
-              هذا التقييم ليس تشخيصاً طبياً. النتائج تعكس أنماط الاستجابة فقط. 
-              للحصول على تقييم دقيق ومتابعة مناسبة، يُرجى استشارة متخصص في الصحة النفسية.
-            </p>
+              return (
+                <PatternCard
+                  key={score.disorder_id}
+                  pattern={score}
+                  level={level}
+                  description={levelData.description.replace("{disorder_name}", score.disorder_name)}
+                  feedbackText={feedback}
+                />
+              );
+            })}
           </div>
-        </Card>
+        </section>
 
-        {/* Actions */}
-        <div className="flex gap-4">
-          <Button
-            onClick={() => router.push('/home')}
-            className="flex-1"
-          >
-            العودة إلى الصفحة الرئيسية
-          </Button>
-        </div>
+        {/* Resources Section */}
+        <section className="flex flex-col gap-4">
+          <h2 className="text-2xl font-bold text-text-primary mb-2">
+            📚 الموارد والدعم
+          </h2>
+          <ResourceLinks
+            educationalResources={[]}
+            selfHelpResources={[]}
+            crisisResources={CRISIS_RESOURCES}
+            professionalResources={[]}
+          />
+        </section>
 
-        {/* Metadata */}
-        <div className="text-xs text-text-tertiary text-center">
-          تم إكمال التقييم في {new Date(results.completed_at).toLocaleDateString('ar-SA')}
-          <br />
-          إجمالي الأسئلة: {results.total_questions} | الإجابات المُسجلة: {results.total_responses}
-        </div>
+        {/* Navigation & Next Steps */}
+        <ResultsNavigation moduleId={resolvedParams.moduleId} />
+
+        {/* Metadata Footer */}
+        <footer className="text-xs text-text-tertiary text-center pt-6 border-t border-neutral-200">
+          <p>
+            تم إكمال التقييم في{" "}
+            {new Date(results.completed_at).toLocaleDateString("ar-SA", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </p>
+          <p className="mt-1">
+            إجمالي الأسئلة: {results.total_questions} | الإجابات المُسجلة: {results.total_responses}
+          </p>
+        </footer>
       </div>
     </main>
   );
