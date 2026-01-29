@@ -44,22 +44,22 @@ export default function CrisisResourcesPage() {
                         {service.name}
                       </span>
                       <span className="text-sm text-text-secondary">{service.type}</span>
-                      {service.phone && (
+                      {"phone" in service && service.phone && (
                         <span className="text-sm text-text-primary">
                           هاتف: {service.phone}
                         </span>
                       )}
-                      {service.available && (
+                      {"available" in service && service.available && (
                         <span className="text-sm text-text-secondary">
                           متاح: {service.available}
                         </span>
                       )}
-                      {service.languages && (
+                      {"languages" in service && service.languages && (
                         <span className="text-sm text-text-secondary">
                           اللغات: {service.languages}
                         </span>
                       )}
-                      {service.website && (
+                      {"website" in service && service.website && (
                         <a
                           href={service.website}
                           target="_blank"
@@ -69,7 +69,7 @@ export default function CrisisResourcesPage() {
                           زيارة الموقع
                         </a>
                       )}
-                      {service.note && (
+                      {"note" in service && service.note && (
                         <p className="text-sm text-text-secondary">{service.note}</p>
                       )}
                     </div>
