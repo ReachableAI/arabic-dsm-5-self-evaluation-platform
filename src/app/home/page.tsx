@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { CategoryCard } from "@/components/assessment/category-card";
 import content from "@/../content/ui/app_copy.json";
 
@@ -58,50 +59,52 @@ export default function HomePage() {
                     title={category.title}
                     description={category.short_description}
                     heroImage={
-                      <div
-                        className="w-full aspect-video rounded-t-lg bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-secondary)]/20 flex items-center justify-center"
-                        role="img"
-                        aria-label={`رسم توضيحي لفئة ${category.title}`}
-                      >
-                        {/* Hero illustration placeholder */}
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-16 h-16 text-[var(--color-primary)]"
+                      isAvailable && (category.id === "anxiety" || category.id === "depression") ? (
+                        <div className="relative w-full aspect-video rounded-t-lg overflow-hidden">
+                          <Image
+                            src={
+                              category.id === "anxiety"
+                                ? "/images/heroes/hero_anxiety_calm-garden_2x.webp"
+                                : "/images/heroes/hero_depression_sunrise_2x.webp"
+                            }
+                            alt={`رسم توضيحي لفئة ${category.title}`}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
+                          />
+                        </div>
+                      ) : (
+                        <div
+                          className="w-full aspect-video rounded-t-lg bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-secondary)]/20 flex items-center justify-center"
+                          role="img"
+                          aria-label={`رسم توضيحي لفئة ${category.title}`}
                         >
-                          {category.id === "anxiety" && (
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
-                            />
-                          )}
-                          {category.id === "depression" && (
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M2.25 15a4.5 4.5 0 0 0 4.5 4.5H18a3.75 3.75 0 0 0 1.332-7.257 3 3 0 0 0-3.758-3.848 5.25 5.25 0 0 0-10.233 2.33A4.502 4.502 0 0 0 2.25 15Z"
-                            />
-                          )}
-                          {category.id === "adhd" && (
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"
-                            />
-                          )}
-                          {category.id === "ocd" && (
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
-                            />
-                          )}
-                        </svg>
-                      </div>
+                          {/* Icon placeholder for unavailable modules */}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-16 h-16 text-[var(--color-primary)]"
+                          >
+                            {category.id === "adhd" && (
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"
+                              />
+                            )}
+                            {category.id === "ocd" && (
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+                              />
+                            )}
+                          </svg>
+                        </div>
+                      )
                     }
                     duration={category.duration}
                     questionCount={
