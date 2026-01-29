@@ -1,0 +1,458 @@
+{
+  "module": {
+    "id": "anxiety",
+    "title": "اضطرابات القلق",
+    "title_en": "Anxiety Disorders",
+    "description": "استكشف أنماط القلق التي قد تؤثر على حياتك اليومية",
+    "icon": "heart-pulse",
+    "color": "amber"
+  },
+  "disorders": [
+    {
+      "id": "gad",
+      "name": "اضطراب القلق المعمم",
+      "name_en": "Generalized Anxiety Disorder",
+      "educational_intro": {
+        "title": "ما هو اضطراب القلق المعمم؟",
+        "body": "القلق شعور طبيعي نمر به جميعاً. لكن عندما يصبح القلق مستمراً ومفرطاً بشأن أمور كثيرة في حياتك اليومية، وعندما يصعب السيطرة عليه، فقد تكون تعاني من نمط يُعرف باضطراب القلق المعمم.\n\nالأشخاص الذين يختبرون هذا النمط يجدون أن القلق يستهلك جزءاً كبيراً من طاقتهم، ويؤثر على نومهم، وتركيزهم، وعلاقاتهم. قد يشعرون بالتوتر الجسدي المستمر، والتعب، وصعوبة الاسترخاء.\n\nتذكر: هذا التطبيق لا يقدم تشخيصاً، بل يساعدك على فهم ما تشعر به بشكل أفضل.",
+        "key_points": [
+          "القلق المستمر والمفرط بشأن أمور متعددة",
+          "صعوبة السيطرة على القلق",
+          "أعراض جسدية مثل التوتر والتعب",
+          "التأثير على الحياة اليومية والعلاقات"
+        ]
+      },
+      "questions": [
+        {
+          "id": "gad_q1",
+          "criterion": "A",
+          "text": "هل تشعر بالقلق أو الانشغال بشأن أمور كثيرة في حياتك اليومية؟",
+          "help_text": "فكر في الأسابيع الأخيرة: هل تجد نفسك قلقاً بشأن العمل، الصحة، العائلة، المال، أو أمور أخرى معظم الوقت؟",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "gad_q2",
+          "criterion": "A",
+          "text": "منذ متى وأنت تشعر بهذا القلق؟",
+          "help_text": "اختر الفترة الزمنية التي تصف قلقك المستمر بدقة",
+          "response_type": "duration",
+          "required": true,
+          "conditional": {
+            "depends_on": "gad_q1",
+            "show_if": ">=2"
+          }
+        },
+        {
+          "id": "gad_q3",
+          "criterion": "B",
+          "text": "هل تجد صعوبة في السيطرة على قلقك حتى لو حاولت؟",
+          "help_text": "حتى عندما تحاول تهدئة نفسك أو التفكير بإيجابية، هل يظل القلق موجوداً؟",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "gad_q4",
+          "criterion": "C1",
+          "text": "هل تشعر بالتوتر أو عدم القدرة على الاسترخاء؟",
+          "help_text": "قد يظهر ذلك كإحساس بأنك 'على حافة الهاوية' أو تشعر بشد عصبي مستمر",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "gad_q5",
+          "criterion": "C2",
+          "text": "هل تشعر بالتعب بسرعة حتى دون مجهود كبير؟",
+          "help_text": "حتى المهام البسيطة تجعلك تشعر بالإرهاق",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "gad_q6",
+          "criterion": "C3",
+          "text": "هل تجد صعوبة في التركيز أو يبدو ذهنك فارغاً؟",
+          "help_text": "صعوبة في إكمال مهام تتطلب تركيزاً، أو تشعر بأن ذهنك 'مشوش'",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "gad_q7",
+          "criterion": "C4",
+          "text": "هل تغضب أو تنزعج بسهولة؟",
+          "help_text": "أشياء صغيرة تثير انزعاجك أو غضبك أكثر من المعتاد",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "gad_q8",
+          "criterion": "C5",
+          "text": "هل تشعر بتوتر في عضلاتك (الرقبة، الكتفين، الظهر)؟",
+          "help_text": "ألم أو شد عضلي مستمر، خاصة في أعلى الجسم",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "gad_q9",
+          "criterion": "C6",
+          "text": "هل تعاني من صعوبة في النوم أو البقاء نائماً؟",
+          "help_text": "تجد صعوبة في الخلود للنوم، أو تستيقظ كثيراً أثناء الليل",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "gad_q10",
+          "criterion": "D",
+          "text": "كيف يؤثر هذا القلق على حياتك اليومية؟",
+          "help_text": "فكر في تأثيره على عملك، علاقاتك، أو قدرتك على الاستمتاع بالحياة",
+          "response_type": "impairment_scale",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "panic",
+      "name": "اضطراب الهلع",
+      "name_en": "Panic Disorder",
+      "educational_intro": {
+        "title": "ما هو اضطراب الهلع؟",
+        "body": "نوبة الهلع هي موجة مفاجئة وشديدة من الخوف تصل إلى ذروتها في غضون دقائق. قد تشعر وكأن قلبك سيتوقف، أو أنك تفقد السيطرة، أو حتى أنك تموت. هذه المشاعر مخيفة جداً، لكنها ليست خطيرة جسدياً.\n\nاضطراب الهلع يحدث عندما تتكرر هذه النوبات، وعندما تبدأ بالقلق المستمر من حدوث نوبات أخرى، أو تغير سلوكك لتجنبها.\n\nالأعراض الجسدية لنوبة الهلع حقيقية جداً - خفقان القلب، ضيق التنفس، الدوار - لكنها ناتجة عن استجابة الجسم للخوف، وليست مرضاً جسدياً خطيراً.",
+        "key_points": [
+          "نوبات خوف مفاجئة وشديدة تصل ذروتها بسرعة",
+          "أعراض جسدية قوية (خفقان، ضيق تنفس، دوار)",
+          "قلق مستمر من حدوث نوبات جديدة",
+          "تغيير السلوك لتجنب المواقف المحفزة"
+        ]
+      },
+      "questions": [
+        {
+          "id": "panic_q1",
+          "criterion": "A",
+          "text": "هل مررت بنوبات مفاجئة من الخوف الشديد تصل ذروتها خلال دقائق؟",
+          "help_text": "نوبة مفاجئة تشعر فيها بذروة الخوف أو الانزعاج بسرعة، حتى لو لم يكن هناك خطر واضح",
+          "response_type": "yes_no_frequency",
+          "required": true
+        },
+        {
+          "id": "panic_q2",
+          "criterion": "A_symptoms",
+          "text": "خلال هذه النوبات، أي من الأعراض التالية شعرت بها؟",
+          "help_text": "اختر جميع ما ينطبق عليك",
+          "response_type": "multi_select",
+          "options": [
+            {
+              "id": "palpitations",
+              "text": "تسارع أو خفقان في القلب",
+              "criterion": "A1"
+            },
+            {
+              "id": "sweating",
+              "text": "التعرق",
+              "criterion": "A2"
+            },
+            {
+              "id": "trembling",
+              "text": "الارتجاف أو الرعشة",
+              "criterion": "A3"
+            },
+            {
+              "id": "shortness_breath",
+              "text": "ضيق في التنفس أو صعوبة في التقاط الأنفاس",
+              "criterion": "A4"
+            },
+            {
+              "id": "choking",
+              "text": "شعور بالاختناق",
+              "criterion": "A5"
+            },
+            {
+              "id": "chest_pain",
+              "text": "ألم أو ضغط في الصدر",
+              "criterion": "A6"
+            },
+            {
+              "id": "nausea",
+              "text": "الغثيان أو انزعاج في المعدة",
+              "criterion": "A7"
+            },
+            {
+              "id": "dizziness",
+              "text": "الدوار أو عدم الثبات",
+              "criterion": "A8"
+            },
+            {
+              "id": "chills_heat",
+              "text": "موجات برد أو حرارة",
+              "criterion": "A9"
+            },
+            {
+              "id": "numbness",
+              "text": "تنميل أو وخز في الجسم",
+              "criterion": "A10"
+            },
+            {
+              "id": "derealization",
+              "text": "شعور بأن الأشياء حولي غير حقيقية",
+              "criterion": "A11"
+            },
+            {
+              "id": "fear_losing_control",
+              "text": "خوف من فقدان السيطرة أو 'الجنون'",
+              "criterion": "A12"
+            },
+            {
+              "id": "fear_dying",
+              "text": "خوف من الموت",
+              "criterion": "A13"
+            }
+          ],
+          "required": true,
+          "conditional": {
+            "depends_on": "panic_q1",
+            "show_if": "yes"
+          }
+        },
+        {
+          "id": "panic_q3",
+          "criterion": "B1",
+          "text": "بعد النوبة، هل قلقت من حدوث نوبات أخرى؟",
+          "help_text": "قلق مستمر أو ترقب لنوبات هلع جديدة",
+          "response_type": "frequency_5point",
+          "required": true,
+          "conditional": {
+            "depends_on": "panic_q1",
+            "show_if": "yes"
+          }
+        },
+        {
+          "id": "panic_q4",
+          "criterion": "B2",
+          "text": "هل غيرت سلوكك لتجنب المواقف التي قد تسبب النوبات؟",
+          "help_text": "مثل تجنب الأماكن المزدحمة، أو وسائل النقل، أو الأنشطة التي قد تحفز نوبة هلع",
+          "response_type": "frequency_5point",
+          "required": true,
+          "conditional": {
+            "depends_on": "panic_q1",
+            "show_if": "yes"
+          }
+        }
+      ]
+    },
+    {
+      "id": "social_anxiety",
+      "name": "اضطراب القلق الاجتماعي",
+      "name_en": "Social Anxiety Disorder",
+      "educational_intro": {
+        "title": "ما هو اضطراب القلق الاجتماعي؟",
+        "body": "الشعور بالتوتر في المواقف الاجتماعية أمر طبيعي. لكن عندما يصبح هذا الخوف شديداً ومستمراً، حيث تشعر بقلق كبير من أن يحكم عليك الآخرون سلباً أو أن تحرج نفسك، فقد يكون هذا قلقاً اجتماعياً.\n\nالأشخاص الذين يختبرون القلق الاجتماعي قد يتجنبون المواقف الاجتماعية تماماً، أو يتحملونها بضيق شديد. هذا يمكن أن يؤثر على الدراسة، العمل، والعلاقات الشخصية.\n\nمن المهم أن تعرف: قلقك ليس 'ضعفاً' في شخصيتك. إنه نمط يمكن فهمه ومعالجته بالدعم المناسب.",
+        "key_points": [
+          "خوف شديد من التقييم السلبي للآخرين",
+          "قلق مستمر في المواقف الاجتماعية أو الأداء العام",
+          "تجنب المواقف الاجتماعية أو تحملها بضيق شديد",
+          "تأثير على الحياة المهنية والعلاقات الشخصية"
+        ]
+      },
+      "questions": [
+        {
+          "id": "social_q1",
+          "criterion": "A",
+          "text": "هل تشعر بخوف أو قلق شديد في المواقف الاجتماعية حيث قد يلاحظك الآخرون؟",
+          "help_text": "مثل التحدث أمام مجموعة، مقابلة أشخاص جدد، الأكل أمام الآخرين، أو التحدث مع أشخاص ذوي سلطة",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "social_q2",
+          "criterion": "B",
+          "text": "هل تخشى أن تتصرف بطريقة محرجة أو أن يحكم الآخرون عليك سلباً؟",
+          "help_text": "قلق من أن يظهر قلقك للآخرين، أو أن تقول شيئاً 'خاطئاً'، أو أن يرفضوك",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "social_q3",
+          "criterion": "C",
+          "text": "هل تسبب لك المواقف الاجتماعية قلقاً شبه دائم؟",
+          "help_text": "تقريباً دائماً تشعر بالقلق في هذه المواقف، وليس أحياناً فقط",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "social_q4",
+          "criterion": "D",
+          "text": "هل تتجنب المواقف الاجتماعية أو تتحملها بضيق شديد؟",
+          "help_text": "تخطط لتجنبها، أو تحضر لكن تشعر بضيق كبير طوال الوقت",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "social_q5",
+          "criterion": "specifier",
+          "text": "هل يقتصر قلقك على التحدث أو الأداء أمام الآخرين (مثل العروض التقديمية أو الخطابات)؟",
+          "help_text": "أم أنه يشمل تفاعلات اجتماعية عامة أيضاً؟",
+          "response_type": "yes_no",
+          "required": false
+        },
+        {
+          "id": "social_q6",
+          "criterion": "impairment",
+          "text": "كيف يؤثر هذا القلق على حياتك؟",
+          "help_text": "تأثيره على دراستك، عملك، أو علاقاتك الشخصية",
+          "response_type": "impairment_scale",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "response_scales": {
+    "frequency_5point": {
+      "type": "radio",
+      "options": [
+        {
+          "value": 0,
+          "label": "لم يحدث أبداً",
+          "label_en": "Never"
+        },
+        {
+          "value": 1,
+          "label": "نادراً",
+          "label_en": "Rarely",
+          "description": "مرة أو مرتين"
+        },
+        {
+          "value": 2,
+          "label": "أحياناً",
+          "label_en": "Sometimes",
+          "description": "أسبوعياً تقريباً"
+        },
+        {
+          "value": 3,
+          "label": "كثيراً",
+          "label_en": "Often",
+          "description": "عدة مرات في الأسبوع"
+        },
+        {
+          "value": 4,
+          "label": "دائماً تقريباً",
+          "label_en": "Almost always",
+          "description": "يومياً"
+        }
+      ]
+    },
+    "duration": {
+      "type": "radio",
+      "options": [
+        {
+          "value": 1,
+          "label": "أقل من أسبوعين"
+        },
+        {
+          "value": 2,
+          "label": "2-4 أسابيع"
+        },
+        {
+          "value": 3,
+          "label": "1-3 أشهر"
+        },
+        {
+          "value": 4,
+          "label": "3-6 أشهر"
+        },
+        {
+          "value": 5,
+          "label": "أكثر من 6 أشهر"
+        }
+      ]
+    },
+    "impairment_scale": {
+      "type": "radio",
+      "options": [
+        {
+          "value": 0,
+          "label": "لا يؤثر على الإطلاق"
+        },
+        {
+          "value": 1,
+          "label": "تأثير طفيف"
+        },
+        {
+          "value": 2,
+          "label": "تأثير متوسط"
+        },
+        {
+          "value": 3,
+          "label": "تأثير كبير"
+        },
+        {
+          "value": 4,
+          "label": "تأثير شديد جداً"
+        }
+      ]
+    },
+    "yes_no": {
+      "type": "radio",
+      "options": [
+        {
+          "value": "yes",
+          "label": "نعم"
+        },
+        {
+          "value": "no",
+          "label": "لا"
+        }
+      ]
+    },
+    "yes_no_frequency": {
+      "type": "composite",
+      "parts": [
+        {
+          "id": "occurrence",
+          "type": "radio",
+          "options": [
+            {
+              "value": "yes",
+              "label": "نعم"
+            },
+            {
+              "value": "no",
+              "label": "لا"
+            }
+          ]
+        },
+        {
+          "id": "frequency",
+          "type": "radio",
+          "conditional": {
+            "show_if": "occurrence==yes"
+          },
+          "options": [
+            {
+              "value": 1,
+              "label": "مرة واحدة فقط"
+            },
+            {
+              "value": 2,
+              "label": "بضع مرات"
+            },
+            {
+              "value": 3,
+              "label": "شهرياً"
+            },
+            {
+              "value": 4,
+              "label": "أسبوعياً"
+            },
+            {
+              "value": 5,
+              "label": "يومياً أو أكثر"
+            }
+          ]
+        }
+      ]
+    },
+    "multi_select": {
+      "type": "checkbox",
+      "min_selections": 0,
+      "max_selections": null
+    }
+  }
+}
