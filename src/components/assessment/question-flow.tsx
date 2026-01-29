@@ -33,6 +33,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Progress } from '@/components/ui/progress';
+import { CrisisModal, PersistentCrisisIndicator } from './crisis-modal';
 
 export interface QuestionFlowProps {
   module: AssessmentModule;
@@ -58,6 +59,8 @@ export function QuestionFlow({ module, disorderId, onComplete }: QuestionFlowPro
   } = useAssessment();
 
   const [showExitDialog, setShowExitDialog] = React.useState(false);
+  const [showCrisisModal, setShowCrisisModal] = React.useState(false);
+  const [crisisAcknowledged, setCrisisAcknowledged] = React.useState(false);
   const [currentResponse, setCurrentResponse] = React.useState<ResponseValue | undefined>();
 
   // Start assessment on mount
@@ -105,7 +108,42 @@ export function QuestionFlow({ module, disorderId, onComplete }: QuestionFlowPro
     setCurrentResponse(value);
     if (currentQuestion) {
       recordResponse(currentQuestion.id, value);
+
+      // Crisis detection: A9 suicidal ideation with any non-zero frequency
+      if (currentQuestion.crisis_trigger) {
+        const shouldTrigger = checkCrisisTrigger(currentQuestion.crisis_trigger, value);
+        if (shouldTrigger && !crisisAcknowledged) {
+          setShowCrisisModal(true);
+        }
+      }
     }
+  };
+
+  /**
+   * Check if response meets crisis trigger criteria
+   */
+  const checkCrisisTrigger = (
+    trigger: { show_modal_if: string; modal_type: string },
+    value: ResponseValue
+  ): boolean => {
+    if (typeof value !== 'number') return false;
+
+    // Parse condition (e.g., ">=1")
+    const condition = trigger.show_modal_if;
+    if (condition.startsWith('>=')) {
+      const threshold = parseInt(condition.slice(2));
+      return value >= threshold;
+    }
+    if (condition.startsWith('>')) {
+      const threshold = parseInt(condition.slice(1));
+      return value > threshold;
+    }
+    if (condition.startsWith('==')) {
+      const threshold = parseInt(condition.slice(2));
+      return value === threshold;
+    }
+
+    return false;
   };
 
   const handleNext = () => {
@@ -134,6 +172,21 @@ export function QuestionFlow({ module, disorderId, onComplete }: QuestionFlowPro
   };
 
   const confirmExit = () => {
+    exitAssessment();
+    router.push('/home');
+  };
+
+  const handleCrisisAcknowledge = () => {
+    setCrisisAcknowledged(true);
+  };
+
+  const handleCrisisContinue = () => {
+    setShowCrisisModal(false);
+    // User can continue assessment; indicator will remain visible
+  };
+
+  const handleCrisisExit = () => {
+    setShowCrisisModal(false);
     exitAssessment();
     router.push('/home');
   };
@@ -216,6 +269,17 @@ export function QuestionFlow({ module, disorderId, onComplete }: QuestionFlowPro
           {isLastQuestion ? 'إنهاء' : 'التالي'}
         </Button>
       </div>
+
+      {/* Crisis intervention modal */}
+      <CrisisModal
+        open={showCrisisModal}
+        onContinue={handleCrisisContinue}
+        onExit={handleCrisisExit}
+        onAcknowledge={handleCrisisAcknowledge}
+      />
+
+      {/* Persistent crisis indicator (after acknowledgement) */}
+      {crisisAcknowledged && !showCrisisModal && <PersistentCrisisIndicator />}
 
       {/* Exit confirmation dialog */}
       <Dialog open={showExitDialog} onOpenChange={setShowExitDialog}>

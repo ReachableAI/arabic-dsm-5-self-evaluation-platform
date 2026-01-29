@@ -11,8 +11,12 @@
 export type ResponseType = 
   | 'frequency_5point'
   | 'yes_no'
+  | 'yes_no_duration'
   | 'multi_select'
-  | 'duration';
+  | 'duration'
+  | 'weight_appetite_change'
+  | 'sleep_change'
+  | 'impairment_scale';
 
 export type FrequencyValue = 'never' | 'rarely' | 'sometimes' | 'often' | 'always';
 export type YesNoValue = 'yes' | 'no';
@@ -43,6 +47,11 @@ export interface Question {
     value: string;
     label: string;
   }>;
+  risk_flag?: 'CRITICAL' | 'HIGH' | 'MODERATE'; // Risk level for crisis detection
+  crisis_trigger?: {
+    show_modal_if: string; // Condition (e.g., ">=1")
+    modal_type: 'suicidal_ideation' | 'self_harm' | 'general_distress';
+  };
 }
 
 /**
@@ -52,6 +61,7 @@ export interface EducationalIntro {
   title: string;
   body: string;
   key_points: string[];
+  safety_note?: string; // Optional safety warning
 }
 
 /**
