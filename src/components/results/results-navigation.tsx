@@ -44,8 +44,8 @@ export const ResultsNavigation: React.FC<ResultsNavigationProps> = ({ moduleId }
       <div className="grid gap-3 md:grid-cols-2">
         <Button
           onClick={handleTryAnother}
-          variant="outline"
-          size="lg"
+          variant="secondary"
+          size="large"
           className="w-full justify-center h-auto py-4 text-base"
         >
           جرب فئة أخرى
@@ -53,7 +53,7 @@ export const ResultsNavigation: React.FC<ResultsNavigationProps> = ({ moduleId }
 
         <Button
           onClick={handleReturnHome}
-          size="lg"
+          size="large"
           className="w-full justify-center h-auto py-4 text-base"
         >
           العودة إلى الصفحة الرئيسية

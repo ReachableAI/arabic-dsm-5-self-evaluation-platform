@@ -51,7 +51,7 @@ export default function ResultsPage({ params }: ResultsPageProps) {
               يبدو أنك لم تكمل تقييماً بعد. ابدأ تقييماً جديداً من الصفحة الرئيسية.
             </p>
           </div>
-          <Button onClick={() => router.push("/home")} size="lg">
+          <Button onClick={() => router.push("/home")} size="large">
             العودة إلى الصفحة الرئيسية
           </Button>
         </div>
