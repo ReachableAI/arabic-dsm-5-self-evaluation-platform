@@ -65,6 +65,7 @@ export const OptionListResponse = React.forwardRef<
       aria-label={ariaLabel || 'اختر خياراً'}
       className={cn('flex flex-col gap-2', className)}
       onKeyDown={handleKeyDown}
+      tabIndex={-1}
       {...props}
     >
       {options.map((option, index) => {

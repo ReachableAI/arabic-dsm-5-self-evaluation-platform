@@ -25,9 +25,18 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl">
       <body className={`${ibmPlexSansArabic.variable} antialiased`}>
+        {/* Skip to main content link for keyboard navigation */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:right-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-md focus:shadow-lg"
+        >
+          الانتقال إلى المحتوى الرئيسي
+        </a>
         <MoodProvider>
           <AssessmentProvider>
-            {children}
+            <main id="main-content">
+              {children}
+            </main>
           </AssessmentProvider>
         </MoodProvider>
       </body>
