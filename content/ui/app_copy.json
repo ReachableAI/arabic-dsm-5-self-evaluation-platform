@@ -90,9 +90,7 @@
         "duration": "10-12 دقائق",
         "icon": "bolt",
         "color": "orange",
-        "illustration": "adhd_category",
-        "status": "قريباً",
-        "status_note": "سيتوفر في التحديث القادم"
+        "illustration": "adhd_category"
       },
       {
         "id": "ocd",
@@ -103,9 +101,19 @@
         "duration": "9-11 دقائق",
         "icon": "refresh",
         "color": "purple",
-        "illustration": "ocd_category",
-        "status": "قريباً",
-        "status_note": "سيتوفر في التحديث القادم"
+        "illustration": "ocd_category"
+      },
+      {
+        "id": "ptsd",
+        "title": "اضطرابات الصدمة والكرب",
+        "short_description": "الصدمة، الكرب ما بعد الصدمة",
+        "detailed_description": "فهم تأثير الأحداث الصادمة على صحتك النفسية. يتضمن أسئلة حساسة ويمكنك التوقف في أي وقت. يستغرق التقييم حوالي 12-15 دقيقة.",
+        "question_count": "~20 سؤالاً",
+        "duration": "12-15 دقيقة",
+        "icon": "shield-alert",
+        "color": "rose",
+        "illustration": "ptsd_category",
+        "safety_note": "محتوى حساس: يتضمن أسئلة عن تجارب صادمة"
       }
     ],
     "footer_note": "يمكنك إكمال تقييم واحد أو أكثر. لا توجد قيود."

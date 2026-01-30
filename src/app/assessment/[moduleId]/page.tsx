@@ -8,7 +8,8 @@
  * - Module hero illustration and introduction
  * - List of disorders in the module with educational content
  * - Navigation to individual disorder assessments
- * - Safety notices for sensitive modules
+ * - Safety notices for sensitive modules (Depression, PTSD)
+ * - Pre-assessment modal for PTSD trigger warning
  * - RTL-optimized layout
  */
 
@@ -20,6 +21,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { PreAssessmentModal } from '@/components/assessment/pre-assessment-modal';
 import { AlertCircle, ArrowRight } from 'lucide-react';
 import { loadModule, getHeroImage, getModuleMetadata } from '@/lib/module-registry';
 
@@ -32,6 +34,9 @@ interface ModulePageProps {
 export default function ModulePage({ params }: ModulePageProps) {
   const router = useRouter();
   const [resolvedParams, setResolvedParams] = React.useState<{ moduleId: string } | null>(null);
+  const [showPTSDModal, setShowPTSDModal] = React.useState(false);
+  const [ptsdModalShown, setPtsdModalShown] = React.useState(false);
+  const [selectedDisorderId, setSelectedDisorderId] = React.useState<string | null>(null);
 
   // Resolve params Promise
   React.useEffect(() => {
@@ -64,17 +69,69 @@ export default function ModulePage({ params }: ModulePageProps) {
   const { module: moduleInfo, disorders } = moduleData;
   const heroImage = getHeroImage(resolvedParams.moduleId);
 
-  // Determine if this module needs safety warnings (e.g., depression)
+  // Determine if this module needs safety warnings
   const showSafetyWarning = resolvedParams.moduleId === 'depression';
+  const isPTSD = resolvedParams.moduleId === 'ptsd';
+  const hasTriggerWarning = isPTSD && moduleInfo.trigger_warning?.enabled;
+
+  // Handle disorder start click
+  const handleStartAssessment = (disorderId: string) => {
+    // For PTSD module, show trigger warning modal first (once per session)
+    if (isPTSD && hasTriggerWarning && !ptsdModalShown) {
+      setSelectedDisorderId(disorderId);
+      setShowPTSDModal(true);
+    } else {
+      // Navigate directly for other modules or if modal already shown
+      router.push(`/assessment/${resolvedParams.moduleId}/${disorderId}`);
+    }
+  };
+
+  // Handle PTSD modal continue
+  const handlePTSDContinue = () => {
+    setShowPTSDModal(false);
+    setPtsdModalShown(true);
+    if (selectedDisorderId) {
+      router.push(`/assessment/${resolvedParams.moduleId}/${selectedDisorderId}`);
+    }
+  };
+
+  // Handle PTSD modal skip
+  const handlePTSDSkip = () => {
+    setShowPTSDModal(false);
+    setSelectedDisorderId(null);
+    router.push('/home');
+  };
 
   return (
     <div className="min-h-screen bg-background">
+      {/* PTSD Pre-Assessment Modal */}
+      {isPTSD && hasTriggerWarning && moduleInfo.trigger_warning && (
+        <PreAssessmentModal
+          open={showPTSDModal}
+          title={moduleInfo.trigger_warning.title}
+          content={moduleInfo.trigger_warning.body}
+          canSkip={moduleInfo.trigger_warning.can_skip}
+          skipButtonText={moduleInfo.trigger_warning.skip_button_text}
+          continueButtonText={moduleInfo.trigger_warning.continue_button_text}
+          onContinue={handlePTSDContinue}
+          onSkip={handlePTSDSkip}
+        />
+      )}
+
       {/* Hero section with module introduction */}
       <section 
         className={`relative bg-gradient-to-br border-b ${
           metadata.color === 'amber' 
             ? 'from-amber-50 to-orange-50 border-amber-100' 
-            : 'from-blue-50 to-indigo-50 border-blue-100'
+            : metadata.color === 'blue'
+            ? 'from-blue-50 to-indigo-50 border-blue-100'
+            : metadata.color === 'purple'
+            ? 'from-purple-50 to-pink-50 border-purple-100'
+            : metadata.color === 'orange'
+            ? 'from-orange-50 to-yellow-50 border-orange-100'
+            : metadata.color === 'rose'
+            ? 'from-rose-50 to-red-50 border-rose-100'
+            : 'from-gray-50 to-gray-100 border-gray-100'
         }`}
       >
         {/* Hero illustration */}
@@ -104,6 +161,19 @@ export default function ModulePage({ params }: ModulePageProps) {
           </div>
         </div>
       </section>
+
+      {/* Enhanced safety notice for PTSD module */}
+      {isPTSD && (
+        <div className="max-w-6xl mx-auto px-4 py-6">
+          <Alert variant="destructive" className="border-red-300 bg-red-50">
+            <AlertCircle className="h-5 w-5 text-red-600" aria-hidden="true" />
+            <AlertDescription className="text-base leading-relaxed">
+              <strong>محتوى حساس:</strong> يتضمن هذا القسم أسئلة عن تجارب صادمة قد تكون مؤلمة أو محفزة. 
+              ستُطلب موافقتك قبل البدء، ويمكنك التوقف في أي وقت. راحتك وسلامتك النفسية أولوية.
+            </AlertDescription>
+          </Alert>
+        </div>
+      )}
 
       {/* Safety notice for depression module */}
       {showSafetyWarning && (
@@ -193,7 +263,7 @@ export default function ModulePage({ params }: ModulePageProps) {
                       {/* Start assessment button */}
                       <div className="pt-4">
                         <Button
-                          onClick={() => router.push(`/assessment/${resolvedParams.moduleId}/${disorder.id}`)}
+                          onClick={() => handleStartAssessment(disorder.id)}
                           className="w-full md:w-auto"
                           size="large"
                         >

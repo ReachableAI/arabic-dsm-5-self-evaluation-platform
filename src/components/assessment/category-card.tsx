@@ -34,6 +34,10 @@ export interface CategoryCardProps {
    */
   questionCount?: number;
   /**
+   * Optional safety badge for sensitive content
+   */
+  safetyBadge?: React.ReactNode;
+  /**
    * Click handler
    */
   onClick?: () => void;
@@ -75,6 +79,7 @@ export const CategoryCard = React.forwardRef<HTMLDivElement, CategoryCardProps>(
       icon,
       duration,
       questionCount,
+      safetyBadge,
       onClick,
       className,
       ...props
@@ -122,6 +127,11 @@ export const CategoryCard = React.forwardRef<HTMLDivElement, CategoryCardProps>(
               <CardDescription className="line-clamp-2">
                 {description}
               </CardDescription>
+              {safetyBadge && (
+                <div className="mt-2">
+                  {safetyBadge}
+                </div>
+              )}
             </div>
           </div>
         </CardHeader>

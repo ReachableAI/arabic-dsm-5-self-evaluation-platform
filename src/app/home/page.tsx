@@ -4,14 +4,16 @@ import * as React from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { CategoryCard } from "@/components/assessment/category-card";
+import { SafetyBadge } from "@/components/assessment/safety-badge";
 import content from "@/../content/ui/app_copy.json";
 
 /**
  * Home screen - Category browser
  *
  * Features:
- * - 4 category cards (Anxiety, Depression active; ADHD, OCD greyed)
+ * - Category cards for all available modules
  * - Hero illustrations on each card
+ * - Safety badges for sensitive modules (PTSD)
  * - Responsive grid: 1 col mobile, 2 col tablet, 4 col desktop
  * - Navigation to assessment start
  */
@@ -24,6 +26,15 @@ export default function HomePage() {
     if (isAvailable) {
       router.push(`/assessment/${categoryId}`);
     }
+  };
+
+  // Hero images mapping
+  const heroImagesMap: Record<string, string> = {
+    anxiety: "/images/heroes/hero_anxiety_calm-garden_2x.webp",
+    depression: "/images/heroes/hero_depression_sunrise_2x.webp",
+    ocd: "/images/heroes/hero_ocd_gentle-spiral-card_2x.webp",
+    adhd: "/images/heroes/hero_adhd_guided-kite-card_2x.webp",
+    ptsd: "/images/heroes/hero_ptsd_safe-harbor-card_2x.webp",
   };
 
   return (
@@ -49,6 +60,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
             {categories.map((category) => {
               const isAvailable = !category.status;
+              const heroImagePath = heroImagesMap[category.id];
 
               return (
                 <div
@@ -59,14 +71,10 @@ export default function HomePage() {
                     title={category.title}
                     description={category.short_description}
                     heroImage={
-                      isAvailable && (category.id === "anxiety" || category.id === "depression") ? (
+                      isAvailable && heroImagePath ? (
                         <div className="relative w-full aspect-video rounded-t-lg overflow-hidden">
                           <Image
-                            src={
-                              category.id === "anxiety"
-                                ? "/images/heroes/hero_anxiety_calm-garden_2x.webp"
-                                : "/images/heroes/hero_depression_sunrise_2x.webp"
-                            }
+                            src={heroImagePath}
                             alt={`رسم توضيحي لفئة ${category.title}`}
                             fill
                             priority={category.id === "anxiety"}
@@ -103,6 +111,13 @@ export default function HomePage() {
                                 d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
                               />
                             )}
+                            {category.id === "ptsd" && (
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M12 9v3.75m0-10.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.25-8.25-3.286Z"
+                              />
+                            )}
                           </svg>
                         </div>
                       )
@@ -112,6 +127,17 @@ export default function HomePage() {
                       category.question_count
                         ? parseInt(category.question_count.match(/\d+/)?.[0] || "0")
                         : undefined
+                    }
+                    safetyBadge={
+                      category.safety_note && category.id === "ptsd" ? (
+                        <SafetyBadge variant="danger">
+                          {category.safety_note}
+                        </SafetyBadge>
+                      ) : category.safety_note ? (
+                        <SafetyBadge variant="warning">
+                          {category.safety_note}
+                        </SafetyBadge>
+                      ) : undefined
                     }
                     onClick={
                       isAvailable
