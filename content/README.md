@@ -187,9 +187,21 @@ All questions mapped to specific DSM-5-TR criteria per `docs/discovery/05_criter
 
 ## Maintenance
 
+For detailed governance and maintenance procedures, see:
+- **Content Governance Workflow**: `docs/planning/content_governance_workflow.md`
+- **Content Change Log**: `content/CHANGELOG.md`
+
+### Quick Reference
+
+**Helpline Verification**: Quarterly (Jan, Apr, Jul, Oct) — verify all regional helplines  
+**Resource Links**: Annual (January) — check all external links  
+**New Module Approval**: Follow 7-stage governance workflow (Arabic review, safety review, schema validation, integration review, QA testing)
+
 ### Updating Helplines
 
 Helplines should be verified quarterly. Update `safety/safety_disclaimers.json` → `regional_helplines.regions`.
+
+See detailed procedure in `docs/planning/content_governance_workflow.md` → Safety Maintenance Cadence.
 
 ### Adding New Disorders
 
