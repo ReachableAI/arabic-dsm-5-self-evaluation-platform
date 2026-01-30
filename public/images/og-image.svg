@@ -1,0 +1,58 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F0F9FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E0F2FE;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="1200" height="630" fill="url(#bg-gradient)"/>
+  
+  <!-- Decorative arc pattern (Islamic-inspired) -->
+  <g opacity="0.15">
+    <circle cx="100" cy="100" r="200" fill="#0EA5E9" />
+    <circle cx="1100" cy="530" r="200" fill="#F59E0B" />
+  </g>
+  
+  <!-- Main content -->
+  <g>
+    <!-- Title in Arabic -->
+    <text x="600" y="240" font-family="Arial, sans-serif" font-size="64" font-weight="700" fill="#0F172A" text-anchor="middle" direction="rtl">
+      منصة التقييم الذاتي
+    </text>
+    
+    <!-- Subtitle in Arabic -->
+    <text x="600" y="310" font-family="Arial, sans-serif" font-size="32" fill="#475569" text-anchor="middle" direction="rtl">
+      استكشف صحتك النفسية بطريقة منظمة وآمنة
+    </text>
+    
+    <!-- DSM-5-TR Badge -->
+    <rect x="500" y="360" width="200" height="60" rx="30" fill="#0EA5E9" opacity="0.1"/>
+    <text x="600" y="398" font-family="Arial, sans-serif" font-size="24" font-weight="600" fill="#0369A1" text-anchor="middle">
+      DSM-5-TR
+    </text>
+    
+    <!-- Bottom feature tags -->
+    <g transform="translate(300, 480)">
+      <circle cx="0" cy="0" r="8" fill="#10B981"/>
+      <text x="20" y="6" font-family="Arial, sans-serif" font-size="20" fill="#64748B" text-anchor="start">
+        خصوصية كاملة
+      </text>
+    </g>
+    
+    <g transform="translate(520, 480)">
+      <circle cx="0" cy="0" r="8" fill="#10B981"/>
+      <text x="20" y="6" font-family="Arial, sans-serif" font-size="20" fill="#64748B" text-anchor="start">
+        لا حسابات
+      </text>
+    </g>
+    
+    <g transform="translate(700, 480)">
+      <circle cx="0" cy="0" r="8" fill="#10B981"/>
+      <text x="20" y="6" font-family="Arial, sans-serif" font-size="20" fill="#64748B" text-anchor="start">
+        علمي ومنظم
+      </text>
+    </g>
+  </g>
+</svg>
