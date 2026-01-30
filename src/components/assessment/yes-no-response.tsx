@@ -57,6 +57,7 @@ export const YesNoResponse = React.forwardRef<HTMLDivElement, YesNoProps>(
         aria-label={ariaLabel || 'اختر نعم أو لا'}
         className={cn('flex gap-3', className)}
         onKeyDown={handleKeyDown}
+        tabIndex={-1}
         {...props}
       >
         {options.map((option, index) => {

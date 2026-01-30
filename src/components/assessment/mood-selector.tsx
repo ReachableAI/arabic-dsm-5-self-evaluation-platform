@@ -90,6 +90,7 @@ export const MoodSelector = React.forwardRef<
       aria-label={ariaLabel || "اختر حالتك المزاجية"}
       className="flex flex-col gap-4"
       onKeyDown={handleKeyDown}
+      tabIndex={-1}
       {...props}
     >
       <div className="grid grid-cols-5 gap-2 sm:gap-4">

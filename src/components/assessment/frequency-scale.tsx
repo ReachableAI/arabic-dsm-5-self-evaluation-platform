@@ -106,6 +106,7 @@ export const FrequencyScale = React.forwardRef<
         aria-label={ariaLabel || "اختر التكرار"}
         className={cn("flex flex-col gap-4", className)}
         onKeyDown={handleKeyDown}
+        tabIndex={-1}
         {...props}
       >
         {/* Visual scale indicator */}

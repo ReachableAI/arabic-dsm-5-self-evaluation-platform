@@ -245,7 +245,12 @@ export function QuestionFlow({ module, disorderId, onComplete }: QuestionFlowPro
 
   if (!currentQuestion || !disorder) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
+      <div 
+        className="flex items-center justify-center min-h-[400px]"
+        role="status"
+        aria-busy="true"
+        aria-live="polite"
+      >
         <div className="text-text-secondary">جارٍ التحميل...</div>
       </div>
     );
@@ -273,14 +278,14 @@ export function QuestionFlow({ module, disorderId, onComplete }: QuestionFlowPro
         </div>
 
         {/* Progress bar */}
-        <div className="w-full">
+        <div className="w-full" role="region" aria-label="شريط التقدم">
           <Progress
             value={progress}
             className="h-2"
             aria-label={`التقدم: ${progress}٪`}
           />
-          <div className="sr-only" role="status" aria-live="polite">
-            أكملت {progress}٪ من الأسئلة
+          <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+            أكملت {progress}٪ من الأسئلة. السؤال {currentQuestionIndex + 1} من {totalQuestions}.
           </div>
         </div>
 

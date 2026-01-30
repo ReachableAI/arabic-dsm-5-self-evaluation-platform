@@ -200,6 +200,7 @@ export function PersistentCrisisIndicator() {
             onClick={() => setExpanded(true)}
             className="w-full flex items-center justify-between text-right hover:bg-red-100 rounded-lg p-2 transition-colors"
             aria-expanded={expanded}
+            aria-label="عرض أرقام المساعدة الفورية"
           >
             <div className="flex items-center gap-3">
               <Phone className="h-5 w-5 text-red-600 flex-shrink-0" aria-hidden="true" />
@@ -222,6 +223,7 @@ export function PersistentCrisisIndicator() {
                 onClick={() => setExpanded(false)}
                 className="text-sm text-text-secondary hover:text-text-primary"
                 aria-expanded={expanded}
+                aria-label="إخفاء أرقام المساعدة الفورية"
               >
                 إخفاء
               </button>
