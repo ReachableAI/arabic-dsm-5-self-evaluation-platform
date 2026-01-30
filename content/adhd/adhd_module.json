@@ -1,0 +1,360 @@
+{
+  "module": {
+    "id": "adhd",
+    "title": "اضطراب نقص الانتباه وفرط الحركة",
+    "title_en": "Attention-Deficit/Hyperactivity Disorder",
+    "description": "فهم أنماط الانتباه والتركيز والاندفاعية",
+    "icon": "zap",
+    "color": "orange"
+  },
+  "disorders": [
+    {
+      "id": "adhd",
+      "name": "اضطراب نقص الانتباه/فرط الحركة",
+      "name_en": "ADHD",
+      "educational_intro": {
+        "title": "ما هو اضطراب نقص الانتباه وفرط الحركة؟",
+        "body": "جميعنا نفقد التركيز أحياناً أو نشعر بالقلق الحركي. لكن عندما تصبح صعوبات الانتباه أو فرط الحركة أو الاندفاعية نمطاً مستمراً يؤثر على حياتك اليومية، عملك، وعلاقاتك، فقد تكون تختبر ADHD.\n\nADHD يظهر بثلاثة أنماط رئيسية: صعوبة في الحفاظ على الانتباه، أو فرط الحركة والاندفاعية، أو مزيج منهما. الأشخاص الذين يختبرون ADHD قد يجدون صعوبة في إنهاء المهام، تنظيم الوقت، البقاء ساكنين، أو التفكير قبل التصرف.\n\nمهم: ADHD ليس 'كسلاً' أو 'نقص إرادة'. إنه اختلاف في كيفية عمل الدماغ. الخبر الجيد: مع الفهم الصحيح، الاستراتيجيات المناسبة، والدعم المهني، يمكنك إدارة ADHD والنجاح في حياتك.",
+        "key_points": [
+          "صعوبة في الحفاظ على الانتباه والتركيز",
+          "فرط الحركة والتململ المستمر",
+          "الاندفاعية وصعوبة انتظار الدور",
+          "صعوبة في تنظيم المهام والوقت",
+          "تأثير على العمل، الدراسة، والعلاقات",
+          "قابل للإدارة بالاستراتيجيات والعلاج والدعم"
+        ],
+        "safety_note": "هذا التقييم لا يُشخّص ADHD. إذا كانت الأعراض تؤثر بشكل كبير على حياتك، يرجى التواصل مع متخصص للحصول على تقييم شامل."
+      },
+      "questions": [
+        {
+          "id": "adhd_intro",
+          "text": "سنسألك عن نمطين: عدم الانتباه، وفرط الحركة/الاندفاعية. أجب بناءً على كيفية شعورك وتصرفك في الأشهر الستة الماضية.",
+          "response_type": "info_only",
+          "required": false
+        },
+        {
+          "id": "adhd_inattention_header",
+          "text": "القسم الأول: عدم الانتباه",
+          "help_text": "هل تواجه هذه الصعوبات غالباً؟",
+          "response_type": "section_header",
+          "required": false
+        },
+        {
+          "id": "adhd_q1",
+          "criterion": "A1_i",
+          "text": "هل تخفق في الانتباه للتفاصيل أو ترتكب أخطاء بسبب عدم المبالاة؟",
+          "help_text": "في العمل، الدراسة، أو الأنشطة الأخرى",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "adhd_q2",
+          "criterion": "A1_ii",
+          "text": "هل تجد صعوبة في الحفاظ على الانتباه أثناء المهام أو الأنشطة؟",
+          "help_text": "مثل القراءة، المحاضرات، المحادثات الطويلة",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "adhd_q3",
+          "criterion": "A1_iii",
+          "text": "هل تبدو غير مصغٍ عندما يتحدث إليك شخص مباشرة؟",
+          "help_text": "يبدو ذهنك في مكان آخر حتى بدون مشتتات واضحة",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "adhd_q4",
+          "criterion": "A1_iv",
+          "text": "هل تجد صعوبة في اتباع التعليمات أو إنهاء المهام؟",
+          "help_text": "تبدأ المهام لكن تفقد التركيز وتنشغل بسهولة",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "adhd_q5",
+          "criterion": "A1_v",
+          "text": "هل تجد صعوبة في تنظيم المهام والأنشطة؟",
+          "help_text": "إدارة المهام المتسلسلة، ترتيب الأدوات، إدارة الوقت",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "adhd_q6",
+          "criterion": "A1_vi",
+          "text": "هل تتجنب أو تكره المهام التي تتطلب جهداً عقلياً متواصلاً؟",
+          "help_text": "مثل التقارير، ملء النماذج، مراجعة الأوراق الطويلة",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "adhd_q7",
+          "criterion": "A1_vii",
+          "text": "هل تضيع الأشياء الضرورية للمهام؟",
+          "help_text": "مثل المفاتيح، الهاتف، المحفظة، الأوراق، النظارات",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "adhd_q8",
+          "criterion": "A1_viii",
+          "text": "هل يسهل تشتيت انتباهك بمنبهات خارجية؟",
+          "help_text": "أصوات، حركة، حتى أفكارك الخاصة",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "adhd_q9",
+          "criterion": "A1_ix",
+          "text": "هل تنسى الأنشطة اليومية الروتينية؟",
+          "help_text": "مثل المواعيد، دفع الفواتير، إعادة الاتصال",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "adhd_hyperactivity_header",
+          "text": "القسم الثاني: فرط الحركة والاندفاعية",
+          "help_text": "هل تواجه هذه الصعوبات غالباً؟",
+          "response_type": "section_header",
+          "required": false
+        },
+        {
+          "id": "adhd_q10",
+          "criterion": "A2_i",
+          "text": "هل تتململ أو تحرك يديك أو قدميك أو تتلوى في كرسيك؟",
+          "help_text": "صعوبة في الجلوس ساكناً",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "adhd_q11",
+          "criterion": "A2_ii",
+          "text": "هل تغادر مقعدك في مواقف يُنتظر منك فيها البقاء جالساً؟",
+          "help_text": "في الاجتماعات، الفصول الدراسية، المكتب",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "adhd_q12",
+          "criterion": "A2_iii",
+          "text": "هل تشعر بقلق داخلي أو رغبة في الحركة في مواقف غير مناسبة؟",
+          "help_text": "بالنسبة للبالغين، قد يكون شعوراً داخلياً بالقلق أكثر من الحركة الفعلية",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "adhd_q13",
+          "criterion": "A2_iv",
+          "text": "هل تجد صعوبة في القيام بأنشطة ترفيهية بهدوء؟",
+          "help_text": "صعوبة في الاسترخاء، تشعر بعدم الراحة عند الهدوء",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "adhd_q14",
+          "criterion": "A2_v",
+          "text": "هل تشعر أنك 'متحفز' أو 'مدفوع بمحرك'؟",
+          "help_text": "غير قادر على البقاء ساكناً لفترات طويلة، يشعر الآخرون أنك لا تهدأ",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "adhd_q15",
+          "criterion": "A2_vi",
+          "text": "هل تتحدث بإفراط؟",
+          "help_text": "صعوبة في التحكم في كمية الكلام",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "adhd_q16",
+          "criterion": "A2_vii",
+          "text": "هل تندفع للإجابة قبل اكتمال السؤال؟",
+          "help_text": "تكمل جمل الآخرين، لا تنتظر دورك في المحادثة",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "adhd_q17",
+          "criterion": "A2_viii",
+          "text": "هل تجد صعوبة في انتظار دورك؟",
+          "help_text": "في الطوابير، المحادثات، أو المواقف التي تتطلب الانتظار",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "adhd_q18",
+          "criterion": "A2_ix",
+          "text": "هل تقاطع الآخرين أو تقحم نفسك في شؤونهم؟",
+          "help_text": "تتدخل في محادثات أو أنشطة الآخرين، تستخدم أغراض الآخرين دون إذن",
+          "response_type": "frequency_5point",
+          "required": true
+        },
+        {
+          "id": "adhd_q19",
+          "criterion": "B",
+          "text": "هل كانت بعض هذه الأعراض موجودة لديك قبل عمر 12 سنة؟",
+          "help_text": "حتى لو لم تُشخَّص، هل تتذكر صعوبات مماثلة في الطفولة؟",
+          "response_type": "yes_no",
+          "required": true
+        },
+        {
+          "id": "adhd_q20",
+          "criterion": "C",
+          "text": "هل تظهر هذه الصعوبات في بيئتين أو أكثر؟",
+          "help_text": "مثل المنزل، العمل، الدراسة، مع الأصدقاء",
+          "response_type": "yes_no",
+          "required": true
+        },
+        {
+          "id": "adhd_q21",
+          "criterion": "D",
+          "text": "كيف تؤثر هذه الصعوبات على حياتك اليومية؟",
+          "help_text": "تأثيرها على عملك، دراستك، علاقاتك، أو جودة حياتك",
+          "response_type": "impairment_scale",
+          "required": true
+        }
+      ],
+      "resources": {
+        "educational": [
+          {
+            "title": "فهم اضطراب نقص الانتباه وفرط النشاط (ADHD)",
+            "description": "معلومات شاملة عن ADHD عند البالغين والأطفال",
+            "url": "https://www.nimh.nih.gov/health/topics/attention-deficit-hyperactivity-disorder-adhd",
+            "type": "article",
+            "language": "en"
+          },
+          {
+            "title": "ADHD عند البالغين",
+            "description": "كيف يختلف ADHD عند البالغين عن الأطفال",
+            "type": "educational",
+            "language": "ar"
+          },
+          {
+            "title": "نقاط القوة في ADHD",
+            "description": "الإبداع والطاقة والتفكير خارج الصندوق",
+            "type": "educational",
+            "language": "ar"
+          }
+        ],
+        "self_help": [
+          {
+            "title": "استراتيجيات التنظيم",
+            "description": "أدوات عملية لإدارة الوقت والمهام اليومية",
+            "type": "technique",
+            "language": "ar"
+          },
+          {
+            "title": "تقنيات تحسين التركيز",
+            "description": "بيئة العمل، تقنية بومودورو، تقليل المشتتات",
+            "type": "exercise",
+            "language": "ar"
+          },
+          {
+            "title": "إدارة الاندفاعية",
+            "description": "تمارين للتوقف والتفكير قبل التصرف",
+            "type": "technique",
+            "language": "ar"
+          }
+        ],
+        "professional": [
+          {
+            "title": "العلاج السلوكي المعرفي (CBT) لـADHD",
+            "description": "يساعد على بناء مهارات التنظيم وإدارة العواطف",
+            "type": "therapy",
+            "language": "ar"
+          },
+          {
+            "title": "التدريب على المهارات التنفيذية",
+            "description": "تحسين التخطيط والتنظيم وإدارة الوقت",
+            "type": "coaching",
+            "language": "ar"
+          },
+          {
+            "title": "العلاج الدوائي",
+            "description": "المنشطات وغير المنشطات يمكن أن تحسن التركيز والاندفاعية",
+            "type": "medication",
+            "language": "ar"
+          }
+        ],
+        "support": [
+          {
+            "title": "مجتمعات ADHD",
+            "description": "التواصل مع آخرين يختبرون نفس التحديات",
+            "type": "community",
+            "language": "ar"
+          }
+        ]
+      }
+    }
+  ],
+  "response_types": {
+    "frequency_5point": {
+      "type": "radio",
+      "options": [
+        {
+          "value": 0,
+          "label": "لا، أبداً"
+        },
+        {
+          "value": 1,
+          "label": "نادراً"
+        },
+        {
+          "value": 2,
+          "label": "أحياناً"
+        },
+        {
+          "value": 3,
+          "label": "غالباً"
+        },
+        {
+          "value": 4,
+          "label": "دائماً أو كل يوم تقريباً"
+        }
+      ]
+    },
+    "yes_no": {
+      "type": "radio",
+      "options": [
+        {
+          "value": "yes",
+          "label": "نعم"
+        },
+        {
+          "value": "no",
+          "label": "لا"
+        },
+        {
+          "value": "unsure",
+          "label": "غير متأكد"
+        }
+      ]
+    },
+    "impairment_scale": {
+      "type": "radio",
+      "options": [
+        {
+          "value": 0,
+          "label": "لا تأثير ملحوظ"
+        },
+        {
+          "value": 1,
+          "label": "تأثير بسيط (إزعاج طفيف)"
+        },
+        {
+          "value": 2,
+          "label": "تأثير متوسط (يؤثر على بعض الأنشطة)"
+        },
+        {
+          "value": 3,
+          "label": "تأثير كبير (يعيق عدة مجالات من الحياة)"
+        },
+        {
+          "value": 4,
+          "label": "تأثير شديد جداً (يشل الحياة اليومية)"
+        }
+      ]
+    }
+  }
+}

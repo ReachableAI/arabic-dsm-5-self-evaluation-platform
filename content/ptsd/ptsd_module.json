@@ -1,0 +1,516 @@
+{
+  "module": {
+    "id": "ptsd",
+    "title": "اضطرابات الصدمة والكرب",
+    "title_en": "Trauma and Stressor-Related Disorders",
+    "description": "فهم تأثير الأحداث الصادمة على صحتك النفسية",
+    "icon": "shield-alert",
+    "color": "rose",
+    "trigger_warning": {
+      "enabled": true,
+      "title": "تحذير مهم",
+      "body": "يتضمن هذا القسم أسئلة عن تجارب صادمة قد تكون مؤلمة أو محفزة.\n\nإذا كنت لا تشعر بالاستعداد الآن، يمكنك:\n- تخطي هذا القسم واستكشاف أقسام أخرى\n- العودة لاحقاً عندما تشعر بالجاهزية\n- طلب دعم من متخصص قبل البدء\n\nراحتك وسلامتك النفسية أولوية.",
+      "can_skip": true,
+      "skip_button_text": "تخطي هذا القسم",
+      "continue_button_text": "أنا مستعد للمتابعة"
+    }
+  },
+  "disorders": [
+    {
+      "id": "ptsd",
+      "name": "اضطراب الكرب ما بعد الصدمة",
+      "name_en": "Post-Traumatic Stress Disorder (PTSD)",
+      "icd_code": "F43.10",
+      "educational_intro": {
+        "title": "ما هو اضطراب الكرب ما بعد الصدمة؟",
+        "body": "عندما نمر بحدث مخيف أو خطير، من الطبيعي أن نشعر بالخوف أو الحزن أو القلق. معظم الناس يتعافون تدريجياً بعد أسابيع. لكن بالنسبة لبعض الأشخاص، تستمر هذه المشاعر وتشتد، وتبدأ في التأثير على حياتهم اليومية — هذا ما يُعرف باضطراب الكرب ما بعد الصدمة (PTSD).\n\nاضطراب الكرب ما بعد الصدمة يمكن أن يحدث بعد:\n• التعرض المباشر لحدث صادم (حادث، اعتداء، كارثة طبيعية، حرب)\n• مشاهدة حدث صادم يحدث لشخص آخر\n• معرفة أن حدثاً عنيفاً أو صادماً حدث لشخص قريب منك\n• التعرض المتكرر لتفاصيل صادمة (مثل العاملين في الاستجابة للطوارئ)\n\nالأعراض تشمل:\n• ذكريات متطفلة أو كوابيس عن الحدث\n• تجنب أي شيء يذكرك بالصدمة\n• تغيرات سلبية في المزاج والأفكار\n• الشعور بالتوتر الدائم أو سهولة الانزعاج",
+        "key_points": [
+          "رد فعل طبيعي لحدث غير طبيعي",
+          "الذكريات المتطفلة والكوابيس",
+          "تجنب المحفزات المرتبطة بالصدمة",
+          "الشعور بالخطر الدائم أو التوتر",
+          "العلاج فعّال ويمكن أن يحسّن حياتك بشكل كبير"
+        ],
+        "safety_note": "⚠️ إذا كنت تشعر بأفكار انتحارية أو تفكر في إيذاء نفسك، يرجى التواصل مع خط الطوارئ أو متخصص فوراً. أنت لست وحدك."
+      },
+      "questions": [
+        {
+          "id": "ptsd_q1",
+          "criterion": "A",
+          "text": "هل تعرضت لحدث صادم شمل تهديداً حقيقياً أو محتملاً بالموت أو إصابة خطيرة أو عنف جنسي؟",
+          "help_text": "قد يكون ذلك من خلال: التعرض المباشر، مشاهدته يحدث لآخرين، معرفة أنه حدث لشخص قريب منك، أو التعرض المتكرر لتفاصيل صادمة في عملك",
+          "response_type": "yes_no",
+          "required": true,
+          "crisis_flag": "low"
+        },
+        {
+          "id": "ptsd_q1_time",
+          "criterion": "timing",
+          "text": "منذ متى حدث هذا الحدث الصادم؟",
+          "help_text": "حدد الفترة الزمنية الأقرب",
+          "response_type": "trauma_duration",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": false
+        },
+        {
+          "id": "ptsd_q2_intrusion",
+          "criterion": "B",
+          "section_header": "الأعراض المقتحمة",
+          "text": "هل تراودك ذكريات مؤلمة متطفلة ومتكررة عن الحدث الصادم؟",
+          "help_text": "ذكريات تأتي بدون إرادتك وتسبب لك ضيقاً",
+          "response_type": "frequency_5point",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true
+        },
+        {
+          "id": "ptsd_q3_nightmares",
+          "criterion": "B",
+          "text": "هل تعاني من كوابيس متكررة مرتبطة بالحدث الصادم؟",
+          "help_text": "أحلام مزعجة يرتبط محتواها أو شعورها بالصدمة",
+          "response_type": "frequency_5point",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true
+        },
+        {
+          "id": "ptsd_q4_flashbacks",
+          "criterion": "B",
+          "text": "هل تشعر أحياناً وكأن الحدث الصادم يتكرر مرة أخرى (ومضات الذاكرة - flashbacks)؟",
+          "help_text": "لحظات تشعر فيها أنك تعيش الحدث من جديد، قد تفقد الوعي بمحيطك",
+          "response_type": "frequency_5point",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true,
+          "crisis_flag": "medium"
+        },
+        {
+          "id": "ptsd_q5_distress",
+          "criterion": "B",
+          "text": "هل تشعر بضيق نفسي شديد عندما تتعرض لأشياء تذكرك بالحدث الصادم؟",
+          "help_text": "مثل أماكن، أصوات، روائح، أو أشخاص يرتبطون بالصدمة",
+          "response_type": "frequency_5point",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true
+        },
+        {
+          "id": "ptsd_q6_physical",
+          "criterion": "B",
+          "text": "هل تظهر عليك ردود فعل جسدية عند التعرض لمحفزات تذكرك بالصدمة؟",
+          "help_text": "مثل تسارع القلب، التعرق، الارتعاش، صعوبة التنفس",
+          "response_type": "frequency_5point",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true
+        },
+        {
+          "id": "ptsd_q7_avoidance_internal",
+          "criterion": "C",
+          "section_header": "التجنب",
+          "text": "هل تحاول تجنب الأفكار أو المشاعر أو الذكريات المرتبطة بالحدث الصادم؟",
+          "help_text": "محاولة عدم التفكير فيه أو قمع المشاعر المرتبطة به",
+          "response_type": "frequency_5point",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true
+        },
+        {
+          "id": "ptsd_q8_avoidance_external",
+          "criterion": "C",
+          "text": "هل تتجنب الأماكن أو الأشخاص أو المواقف أو الأشياء التي تذكرك بالحدث الصادم؟",
+          "help_text": "مثل تجنب أماكن معينة، محادثات، أنشطة، أو أشخاص",
+          "response_type": "frequency_5point",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true
+        },
+        {
+          "id": "ptsd_q9_amnesia",
+          "criterion": "D",
+          "section_header": "التغيرات السلبية في الأفكار والمزاج",
+          "text": "هل تجد صعوبة في تذكر أجزاء مهمة من الحدث الصادم؟",
+          "help_text": "عدم القدرة على تذكر تفاصيل رئيسية (ليس بسبب إصابة أو مواد)",
+          "response_type": "yes_no",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true
+        },
+        {
+          "id": "ptsd_q10_negative_beliefs",
+          "criterion": "D",
+          "text": "هل لديك معتقدات سلبية ثابتة ومبالغ فيها عن نفسك أو الآخرين أو العالم؟",
+          "help_text": "مثل: 'أنا سيئ'، 'لا يمكن الوثوق بأحد'، 'العالم خطير تماماً'",
+          "response_type": "frequency_5point",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true
+        },
+        {
+          "id": "ptsd_q11_blame",
+          "criterion": "D",
+          "text": "هل تلوم نفسك (أو الآخرين بشكل غير عادل) باستمرار على الحدث الصادم أو نتائجه؟",
+          "help_text": "أفكار مشوهة عن المسؤولية أو السبب",
+          "response_type": "frequency_5point",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true
+        },
+        {
+          "id": "ptsd_q12_negative_mood",
+          "criterion": "D",
+          "text": "هل تشعر بحالة عاطفية سلبية مستمرة؟",
+          "help_text": "مثل الخوف، الرعب، الغضب، الذنب، أو العار معظم الوقت",
+          "response_type": "frequency_5point",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true,
+          "crisis_flag": "medium"
+        },
+        {
+          "id": "ptsd_q13_interest",
+          "criterion": "D",
+          "text": "هل انخفض اهتمامك أو مشاركتك في الأنشطة التي كانت مهمة لك؟",
+          "help_text": "أشياء كنت تستمتع بها لم تعد تهمك",
+          "response_type": "frequency_5point",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true
+        },
+        {
+          "id": "ptsd_q14_detachment",
+          "criterion": "D",
+          "text": "هل تشعر بالانفصال أو النفور من الآخرين؟",
+          "help_text": "الشعور بأنك بعيد عن الناس أو غير قادر على التواصل معهم",
+          "response_type": "frequency_5point",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true
+        },
+        {
+          "id": "ptsd_q15_positive_emotions",
+          "criterion": "D",
+          "text": "هل تجد صعوبة في الشعور بالمشاعر الإيجابية؟",
+          "help_text": "عدم القدرة على الشعور بالسعادة، الحب، أو الرضا",
+          "response_type": "frequency_5point",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true
+        },
+        {
+          "id": "ptsd_q16_irritability",
+          "criterion": "E",
+          "section_header": "التغيرات في الاستثارة ورد الفعل",
+          "text": "هل تشعر بالتوتر أو الغضب بسهولة؟",
+          "help_text": "نوبات غضب أو سلوك عدواني (لفظي أو جسدي) بدون سبب واضح",
+          "response_type": "frequency_5point",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true,
+          "crisis_flag": "medium"
+        },
+        {
+          "id": "ptsd_q17_reckless",
+          "criterion": "E",
+          "text": "هل تظهر سلوكاً متهوراً أو مدمراً للذات؟",
+          "help_text": "قيادة خطرة، تعاطي مواد، سلوكيات خطرة أخرى",
+          "response_type": "frequency_5point",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true,
+          "crisis_flag": "high"
+        },
+        {
+          "id": "ptsd_q18_hypervigilance",
+          "criterion": "E",
+          "text": "هل تشعر بأنك متيقظ بشكل مبالغ فيه لمحيطك؟",
+          "help_text": "مراقبة مستمرة للخطر أو الشعور بأنك 'على حافة الهاوية'",
+          "response_type": "frequency_5point",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true
+        },
+        {
+          "id": "ptsd_q19_startle",
+          "criterion": "E",
+          "text": "هل لديك استجابة مبالغ فيها للمفاجآت (الجفل)?",
+          "help_text": "تنزعج أو ترتعب بسرعة من أصوات أو حركات مفاجئة",
+          "response_type": "frequency_5point",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true
+        },
+        {
+          "id": "ptsd_q20_concentration",
+          "criterion": "E",
+          "text": "هل تعاني من صعوبة في التركيز؟",
+          "help_text": "صعوبة في إكمال المهام أو متابعة المحادثات",
+          "response_type": "frequency_5point",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true
+        },
+        {
+          "id": "ptsd_q21_sleep",
+          "criterion": "E",
+          "text": "هل تعاني من اضطراب في النوم؟",
+          "help_text": "صعوبة في النوم، البقاء نائماً، أو نوم غير مريح",
+          "response_type": "frequency_5point",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true
+        },
+        {
+          "id": "ptsd_q22_duration",
+          "criterion": "F",
+          "section_header": "المدة والتأثير",
+          "text": "منذ متى وأنت تعاني من هذه الأعراض؟",
+          "help_text": "مدة استمرار الأعراض المذكورة أعلاه",
+          "response_type": "symptom_duration",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true
+        },
+        {
+          "id": "ptsd_q23_impairment",
+          "criterion": "G",
+          "text": "كيف تؤثر هذه الأعراض على حياتك اليومية؟",
+          "help_text": "تأثيرها على عملك، علاقاتك، أنشطتك اليومية، أو جودة حياتك",
+          "response_type": "impairment_scale",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": true
+        },
+        {
+          "id": "ptsd_q24_dissociation",
+          "criterion": "dissociative",
+          "section_header": "أعراض إضافية (اختيارية)",
+          "text": "هل تشعر أحياناً بأنك منفصل عن جسدك (كأنك تراقب نفسك من الخارج) أو أن العالم من حولك غير حقيقي؟",
+          "help_text": "تبدد الشخصية أو تبدد الواقع",
+          "response_type": "frequency_5point",
+          "conditional": {
+            "depends_on": "ptsd_q1",
+            "show_if": "yes"
+          },
+          "required": false
+        }
+      ],
+      "resources": {
+        "educational": [
+          {
+            "title": "فهم اضطراب الكرب ما بعد الصدمة",
+            "description": "معلومات شاملة عن PTSD وكيفية التعافي",
+            "url": "https://www.nimh.nih.gov/health/topics/post-traumatic-stress-disorder-ptsd",
+            "type": "article",
+            "language": "en"
+          },
+          {
+            "title": "الصدمة وتأثيرها على الدماغ",
+            "description": "كيف تؤثر الصدمة على الجهاز العصبي",
+            "type": "educational",
+            "language": "ar"
+          }
+        ],
+        "self_help": [
+          {
+            "title": "تقنيات التأريض (Grounding)",
+            "description": "أساليب للتعامل مع الذكريات المتطفلة وومضات الذاكرة",
+            "type": "technique",
+            "language": "ar"
+          },
+          {
+            "title": "تمارين التنفس للتهدئة",
+            "description": "تمارين بسيطة لتهدئة الجهاز العصبي عند التوتر",
+            "type": "exercise",
+            "language": "ar"
+          }
+        ],
+        "professional": [
+          {
+            "title": "العلاج المعرفي السلوكي الموجه للصدمة (TF-CBT)",
+            "description": "نهج علاجي مثبت علمياً لاضطراب الكرب ما بعد الصدمة",
+            "type": "therapy",
+            "language": "ar"
+          },
+          {
+            "title": "علاج إزالة حساسية وإعادة معالجة حركة العين (EMDR)",
+            "description": "علاج متخصص للصدمات",
+            "type": "therapy",
+            "language": "ar"
+          }
+        ],
+        "crisis": [
+          {
+            "title": "خط الطوارئ النفسية",
+            "description": "دعم فوري متاح 24/7",
+            "phone": "920033360",
+            "country": "SA",
+            "type": "hotline"
+          }
+        ]
+      }
+    }
+  ],
+  "response_scales": {
+    "frequency_5point": {
+      "type": "radio",
+      "options": [
+        {
+          "value": 0,
+          "label": "أبداً أو نادراً جداً"
+        },
+        {
+          "value": 1,
+          "label": "قليلاً أو أحياناً"
+        },
+        {
+          "value": 2,
+          "label": "بشكل متوسط أو نصف الوقت"
+        },
+        {
+          "value": 3,
+          "label": "كثيراً أو معظم الوقت"
+        },
+        {
+          "value": 4,
+          "label": "دائماً أو كل يوم تقريباً"
+        }
+      ]
+    },
+    "yes_no": {
+      "type": "radio",
+      "options": [
+        {
+          "value": "yes",
+          "label": "نعم"
+        },
+        {
+          "value": "no",
+          "label": "لا"
+        },
+        {
+          "value": "prefer_not_to_say",
+          "label": "أفضل عدم الإجابة"
+        }
+      ]
+    },
+    "trauma_duration": {
+      "type": "radio",
+      "options": [
+        {
+          "value": "recent",
+          "label": "خلال الشهر الماضي"
+        },
+        {
+          "value": "1-3months",
+          "label": "1-3 أشهر"
+        },
+        {
+          "value": "3-6months",
+          "label": "3-6 أشهر"
+        },
+        {
+          "value": "6months-1year",
+          "label": "6 أشهر - سنة"
+        },
+        {
+          "value": "1-3years",
+          "label": "1-3 سنوات"
+        },
+        {
+          "value": "over3years",
+          "label": "أكثر من 3 سنوات"
+        }
+      ]
+    },
+    "symptom_duration": {
+      "type": "radio",
+      "options": [
+        {
+          "value": "recent",
+          "label": "أقل من شهر"
+        },
+        {
+          "value": "1-3months",
+          "label": "1-3 أشهر"
+        },
+        {
+          "value": "over3months",
+          "label": "أكثر من 3 أشهر (مزمن)"
+        }
+      ]
+    },
+    "impairment_scale": {
+      "type": "radio",
+      "options": [
+        {
+          "value": 0,
+          "label": "لا تأثير ملحوظ"
+        },
+        {
+          "value": 1,
+          "label": "تأثير بسيط (إزعاج طفيف)"
+        },
+        {
+          "value": 2,
+          "label": "تأثير متوسط (يؤثر على بعض الأنشطة)"
+        },
+        {
+          "value": 3,
+          "label": "تأثير كبير (يعيق عدة مجالات من الحياة)"
+        },
+        {
+          "value": 4,
+          "label": "تأثير شديد جداً (يشل الحياة اليومية)"
+        }
+      ]
+    }
+  }
+}
