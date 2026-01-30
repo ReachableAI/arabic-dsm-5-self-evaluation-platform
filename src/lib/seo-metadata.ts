@@ -73,6 +73,20 @@ export const MODULE_SEO_DATA: Record<string, ModuleMetadata> = {
       'obsessive compulsive',
     ],
   },
+  ptsd: {
+    id: 'ptsd',
+    title: 'تقييم اضطرابات الصدمة والكرب',
+    description: 'تقييم ذاتي لاضطرابات الصدمة والكرب بما في ذلك اضطراب الكرب ما بعد الصدمة. مبني على معايير DSM-5-TR. خاص وآمن بالكامل.',
+    keywords: [
+      'اضطراب ما بعد الصدمة',
+      'الصدمة',
+      'الكرب',
+      'PTSD',
+      'تقييم الصدمة',
+      'DSM-5-TR',
+      'trauma',
+    ],
+  },
 };
 
 /**

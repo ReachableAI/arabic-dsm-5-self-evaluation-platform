@@ -236,7 +236,7 @@
       }
     }
   ],
-  "response_types": {
+  "response_scales": {
     "frequency_5point": {
       "type": "radio",
       "options": [

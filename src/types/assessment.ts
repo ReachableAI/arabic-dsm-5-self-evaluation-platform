@@ -17,7 +17,13 @@ export type ResponseType =
   | 'duration'
   | 'weight_appetite_change'
   | 'sleep_change'
-  | 'impairment_scale';
+  | 'impairment_scale'
+  | 'time_consumed'
+  | 'insight_level'
+  | 'symptom_duration'
+  | 'trauma_duration'
+  | 'info_only'
+  | 'section_header';
 
 export type FrequencyValue = 'never' | 'rarely' | 'sometimes' | 'often' | 'always';
 export type YesNoValue = 'yes' | 'no';

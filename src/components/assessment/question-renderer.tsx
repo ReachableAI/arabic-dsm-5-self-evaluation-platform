@@ -157,6 +157,58 @@ export function QuestionRenderer({
           />
         )}
 
+        {question.response_type === 'time_consumed' && scale?.options && (
+          <OptionListResponse
+            options={scale.options.map((option) => ({
+              value: option.value,
+              label: option.label,
+              description: option.description,
+            }))}
+            value={value as string | number}
+            onChange={onChange}
+            aria-label={question.text}
+          />
+        )}
+
+        {question.response_type === 'insight_level' && scale?.options && (
+          <OptionListResponse
+            options={scale.options.map((option) => ({
+              value: option.value,
+              label: option.label,
+              description: option.description,
+            }))}
+            value={value as string | number}
+            onChange={onChange}
+            aria-label={question.text}
+          />
+        )}
+
+        {question.response_type === 'symptom_duration' && scale?.options && (
+          <OptionListResponse
+            options={scale.options.map((option) => ({
+              value: option.value,
+              label: option.label,
+              description: option.description,
+            }))}
+            value={value as string | number}
+            onChange={onChange}
+            aria-label={question.text}
+          />
+        )}
+
+        {question.response_type === 'trauma_duration' && scale?.options && (
+          <OptionListResponse
+            options={scale.options.map((option) => ({
+              value: option.value,
+              label: option.label,
+              description: option.description,
+            }))}
+            value={value as string | number}
+            onChange={onChange}
+            aria-label={question.text}
+          />
+        )}
+
         {question.response_type === 'yes_no_frequency' && scale?.parts && (
           <div className="flex flex-col gap-4">
             <YesNoResponse
