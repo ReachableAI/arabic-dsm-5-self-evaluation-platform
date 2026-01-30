@@ -19,8 +19,12 @@ import content from "@/../content/ui/app_copy.json";
  */
 export default function HomePage() {
   const router = useRouter();
-  const { title, subtitle, categories, footer_note } =
-    content.category_browser;
+  const { title, subtitle, footer_note } = content.category_browser;
+  type Category = (typeof content.category_browser.categories)[number] & {
+    status?: boolean;
+    status_note?: string;
+  };
+  const categories = content.category_browser.categories as Category[];
 
   const handleCategoryClick = (categoryId: string, isAvailable: boolean) => {
     if (isAvailable) {

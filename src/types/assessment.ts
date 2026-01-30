@@ -135,6 +135,14 @@ export interface AssessmentModule {
     description: string;
     icon: string;
     color: string;
+    trigger_warning?: {
+      enabled: boolean;
+      title: string;
+      body: string;
+      can_skip: boolean;
+      skip_button_text: string;
+      continue_button_text: string;
+    };
   };
   disorders: Disorder[];
   response_scales?: Record<string, ResponseScale>;
