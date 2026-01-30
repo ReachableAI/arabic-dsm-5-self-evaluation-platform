@@ -29,12 +29,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const assessmentModules = [
     '/assessment/anxiety',
     '/assessment/depression',
+    '/assessment/ocd',
+    '/assessment/adhd',
+    '/assessment/ptsd',
   ];
 
   // Results pages
   const resultPages = [
     '/results/anxiety',
     '/results/depression',
+    '/results/ocd',
+    '/results/adhd',
+    '/results/ptsd',
   ];
 
   const pages = [...corePages, ...assessmentModules, ...resultPages];
