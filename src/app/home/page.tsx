@@ -69,6 +69,7 @@ export default function HomePage() {
                             }
                             alt={`رسم توضيحي لفئة ${category.title}`}
                             fill
+                            priority={category.id === "anxiety"}
                             className="object-cover"
                             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
                           />
